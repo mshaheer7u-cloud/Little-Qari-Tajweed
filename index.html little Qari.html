@@ -1,0 +1,1520 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>[hidden]{display:none!important}</style>
+<title>Little Qari Tajweed</title>
+<meta name="description" content="A free, animated tajweed course for kids in English: 26 steps from the Arabic letters to Waqf signs, with a 30-question quiz.">
+<meta property="og:title" content="Little Qari Tajweed">
+<meta property="og:description" content="A free, animated tajweed course for kids in English: 26 steps from the Arabic letters to Waqf signs, with a 30-question quiz.">
+</head>
+<body>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri+Quran&family=Amiri:wght@400;700&family=Scheherazade+New&family=Fredoka:wght@500;600;700&family=Nunito:wght@500;700;800&display=swap">
+<style>
+/* Layout: one full-screen lesson slide at a time on a deep-blue night sky with an 8-point star pattern.
+   White "lesson cards" sit on top. Lime = clear / light / correct. Yellow = highlight / heavy / stars. */
+:root{
+  --night:#0a2a6e; --night-2:#0f3a94; --blue:#1f63e6; --blue-2:#3b82ff; --ice:#e4eeff;
+  --lime:#a8e63a; --lime-ink:#3d7600; --lime-soft:#eefbd6;
+  --yellow:#ffd43b; --yellow-ink:#7a5800; --yellow-soft:#fff5cc;
+  --paper:#ffffff; --ink:#0d2257; --muted:#566a99; --line:#cfdcf7;
+  --coral:#ff7a6b;
+  --f-ar:'Amiri','Amiri Quran','Scheherazade New','Noto Naskh Arabic','Traditional Arabic',serif;
+  --f-head:'Fredoka','Baloo 2','Trebuchet MS',system-ui,sans-serif;
+  --f-body:'Nunito','Segoe UI',system-ui,sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:var(--night);color:var(--paper);font-family:var(--f-body);font-size:16px;line-height:1.5;overflow:hidden}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--yellow);outline-offset:3px;border-radius:10px}
+
+.app{height:100%;display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 1fr auto;position:relative;isolation:isolate}
+.sky{position:absolute;inset:0;z-index:-1;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'%3E%3Cg fill='none' stroke='%23ffffff' stroke-opacity='0.07' stroke-width='1.4'%3E%3Crect x='26' y='26' width='32' height='32'/%3E%3Crect x='26' y='26' width='32' height='32' transform='rotate(45 42 42)'/%3E%3C/g%3E%3C/svg%3E"),
+    radial-gradient(1200px 600px at 85% -10%, #2a6cf0 0%, transparent 60%),
+    radial-gradient(900px 500px at -10% 110%, #164fc4 0%, transparent 60%),
+    linear-gradient(160deg,var(--night-2),var(--night));}
+.twinkle{position:absolute;width:6px;height:6px;border-radius:50%;background:var(--yellow);box-shadow:0 0 12px var(--yellow);animation:twinkle 3s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.25;transform:scale(.7)}50%{opacity:1;transform:scale(1.2)}}
+
+/* top bar */
+.topbar{display:flex;align-items:center;gap:12px;padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:10px;font-family:var(--f-head);font-weight:700;font-size:18px;color:var(--paper)}
+.brand-badge{width:42px;height:42px;display:grid;place-items:center;border-radius:12px;background:var(--blue);box-shadow:0 3px 0 rgba(3,16,60,.4)}
+.brand-badge svg{display:block}
+.lesson-tag{margin-left:auto;font-family:var(--f-head);font-weight:600;font-size:14px;color:var(--ink);background:var(--lime);padding:5px 12px;border-radius:999px;white-space:nowrap;min-width:0;flex:0 1 auto;overflow:hidden;text-overflow:ellipsis;max-width:50vw}
+.icon-btn{border:0;background:rgba(255,255,255,.12);color:var(--paper);border-radius:12px;padding:8px 12px;font-weight:800}
+.icon-btn:hover{background:rgba(255,255,255,.22)}
+
+/* deck */
+.deck{position:relative;min-height:0;overflow:hidden}
+.slide{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;display:none;-webkit-overflow-scrolling:touch}
+.slide.active{display:block;animation:slideIn .55s cubic-bezier(.2,.9,.3,1) both}
+.deck.back .slide.active{animation-name:slideInBack}
+@keyframes slideIn{from{opacity:0;transform:translateX(60px)}to{opacity:1;transform:none}}
+@keyframes slideInBack{from{opacity:0;transform:translateX(-60px)}to{opacity:1;transform:none}}
+.inner{max-width:1140px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;justify-content:center;gap:18px;
+  padding-block:12px 28px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+
+.pop{animation:popIn .6s cubic-bezier(.2,1.5,.4,1) both;animation-delay:calc(var(--i,0) * 90ms + 150ms)}
+@keyframes popIn{from{opacity:0;transform:translateY(18px) scale(.92)}to{opacity:1;transform:none}}
+
+.eyebrow{align-self:flex-start;font-family:var(--f-head);font-weight:600;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--ink);background:var(--yellow);padding:4px 12px;border-radius:999px}
+h1,h2,h3{font-family:var(--f-head);margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(36px,6vw,68px);color:var(--yellow)}
+h2{font-size:clamp(28px,4.2vw,46px);color:var(--yellow)}
+h2 .ar-inline{color:var(--lime)}
+h3{font-size:22px;color:var(--ink)}
+.lead{font-size:clamp(17px,2vw,20px);max-width:65ch;margin:0;color:#e9f0ff}
+.lead b{color:var(--lime)}
+
+.ar{font-family:var(--f-ar);direction:rtl;unicode-bidi:isolate;line-height:1.9;font-weight:400}
+.ar-inline{font-family:var(--f-ar);direction:rtl;unicode-bidi:isolate}
+
+.card{background:var(--paper);color:var(--ink);border-radius:22px;padding:20px;box-shadow:0 7px 0 rgba(3,16,60,.35);min-width:0}
+.card p{margin:.3em 0}
+.card .muted{color:var(--muted)}
+.grid{display:grid;gap:16px}
+.g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:860px){.g3,.g4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.g2,.g3,.g4{grid-template-columns:1fr}}
+
+.btn{border:0;border-radius:16px;padding:12px 22px;font-family:var(--f-head);font-weight:600;font-size:18px;background:var(--yellow);color:var(--ink);box-shadow:0 5px 0 #c89a00;transition:transform .12s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #c89a00}
+.btn.lime{background:var(--lime);box-shadow:0 5px 0 #6fa514}
+.btn.ghost{background:var(--ice);box-shadow:0 5px 0 #a9bde8}
+
+.pill{display:inline-block;font-weight:800;font-size:13px;padding:2px 10px;border-radius:999px}
+.pill.heavy{background:var(--yellow);color:var(--ink)}
+.pill.light{background:var(--lime);color:var(--ink)}
+.pill.blue{background:var(--blue);color:#fff}
+
+/* example rows */
+.ex{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:8px 0;border-bottom:2px dashed var(--line)}
+.ex:last-child{border-bottom:0}
+.ex .ar{font-size:34px;color:var(--ink);line-height:1.7}
+.ex .tr{font-weight:800;color:var(--blue)}
+.ex .src{font-size:13px;color:var(--muted);margin-left:auto}
+
+/* cover */
+.cover{align-items:center;text-align:center}
+.cover-word{font-size:clamp(90px,17vw,190px);color:var(--yellow);line-height:1.5;text-shadow:0 8px 0 rgba(0,0,0,.2),0 0 60px rgba(255,212,59,.35);animation:floaty 4s ease-in-out infinite}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.cover .lead{margin-inline:auto}
+.cover-colors{display:flex;gap:8px;justify-content:center}
+.cover-colors span{width:44px;height:10px;border-radius:999px}
+
+/* roadmap */
+.road{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:14px}
+.step{display:flex;gap:12px;align-items:center;text-align:left;border:0;background:var(--paper);color:var(--ink);border-radius:18px;padding:14px;box-shadow:0 6px 0 rgba(3,16,60,.35);transition:transform .15s}
+.step:hover{transform:translateY(-3px) rotate(-1deg)}
+.step .num{flex:none;width:42px;height:42px;border-radius:12px;display:grid;place-items:center;font-family:var(--f-head);font-weight:700;font-size:20px;background:var(--blue);color:#fff}
+.step:nth-child(3n+2) .num{background:var(--lime);color:var(--ink)}
+.step:nth-child(3n) .num{background:var(--yellow);color:var(--ink)}
+.step b{font-family:var(--f-head);font-size:18px;display:block}
+.step small{color:var(--muted);font-weight:700}
+.step .ar-inline{font-size:22px;color:var(--blue)}
+
+/* alphabet */
+.alpha-wrap{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:860px){.alpha-wrap{grid-template-columns:1fr}}
+.alpha{display:grid;grid-template-columns:repeat(auto-fill,minmax(66px,1fr));gap:9px;direction:rtl}
+.tile{border:0;border-radius:16px;background:var(--paper);color:var(--ink);padding:4px 2px 6px;display:flex;flex-direction:column;align-items:center;box-shadow:0 5px 0 rgba(3,16,60,.35);transition:transform .15s, background .15s}
+.tile:hover{transform:translateY(-3px) scale(1.04)}
+.tile .ar{display:block;width:100%;font-size:36px;line-height:1.75;direction:rtl}
+.tile small{display:block;width:100%;padding:0 2px;font-weight:800;font-size:11.5px;line-height:1.3;color:var(--muted);direction:ltr;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tile.heavy{background:var(--yellow-soft);box-shadow:0 5px 0 #d3a800}
+.tile.on{background:var(--lime);box-shadow:0 5px 0 #6fa514}
+.spot{position:relative;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.spot-letter{display:block;width:100%;font-size:120px;line-height:1.75;color:var(--blue);padding-block:4px}
+@media (max-width:860px){.spot-letter{font-size:100px}}
+.spot-letter.bump{animation:bump .5s cubic-bezier(.2,1.6,.4,1)}
+@keyframes bump{from{transform:scale(.4) rotate(-12deg);opacity:0}to{transform:none;opacity:1}}
+.spot h3{font-size:28px;margin:0}
+.spot p{margin:0}
+.spot .say{font-weight:800;color:var(--lime-ink);font-size:18px}
+.legend{display:flex;gap:10px;flex-wrap:wrap;align-items:center;font-size:14px;font-weight:700}
+.legend i{display:inline-block;width:16px;height:16px;border-radius:5px;vertical-align:-3px;margin-right:6px}
+
+/* families */
+.fam{display:flex;gap:10px;flex-wrap:wrap;direction:rtl;justify-content:flex-start}
+.fam span{font-family:var(--f-ar);font-size:40px;line-height:1.6;background:var(--ice);color:var(--ink);border-radius:14px;min-width:58px;text-align:center;padding:0 8px}
+.big-row{display:flex;gap:12px;flex-wrap:wrap;direction:rtl}
+.big-row span{font-family:var(--f-ar);font-size:54px;line-height:1.5;min-width:74px;text-align:center;border-radius:18px;background:var(--yellow);color:var(--ink);box-shadow:0 5px 0 #c89a00;animation:popIn .6s cubic-bezier(.2,1.5,.4,1) both;animation-delay:calc(var(--i,0)*100ms + 300ms)}
+
+/* forms table */
+.tbl-scroll{overflow-x:auto}
+table.forms{border-collapse:separate;border-spacing:6px;width:100%;min-width:440px}
+.forms th{font-family:var(--f-head);font-weight:600;color:var(--muted);font-size:14px}
+.forms td{background:var(--ice);border-radius:14px;text-align:center;font-family:var(--f-ar);font-size:40px;line-height:1.6;color:var(--ink)}
+.forms td.nm{font-family:var(--f-body);font-size:15px;font-weight:800;background:transparent;text-align:left}
+
+/* joiner */
+.joiners{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,230px),1fr));gap:16px}
+.joiner{text-align:center}
+.jstage{position:relative;height:120px;display:grid;place-items:center}
+.apart,.together{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--f-ar);font-size:62px;line-height:1;color:var(--ink);direction:rtl;transition:all .7s cubic-bezier(.2,1,.3,1)}
+.apart{gap:26px}
+.apart span{display:inline-block;background:var(--ice);border-radius:14px;padding:4px 10px 18px}
+.together{opacity:0;transform:scale(.6);color:var(--blue);font-size:76px}
+.joined .apart{gap:0;opacity:0;transform:scale(.8)}
+.joined .together{opacity:1;transform:none}
+.joiner .mean{font-weight:800;color:var(--muted)}
+
+/* harakat cards */
+.hk{text-align:center;position:relative;overflow:hidden}
+.hk .mark{font-family:var(--f-ar);font-size:64px;line-height:1.3;color:var(--coral);display:block;height:96px}
+.slide.active .hk .mark{animation:drop 1s cubic-bezier(.3,1.6,.5,1) both;animation-delay:calc(var(--i,0)*200ms + 300ms)}
+@keyframes drop{from{transform:translateY(-120px) rotate(-20deg);opacity:0}to{transform:none;opacity:1}}
+.hk .letter{font-family:var(--f-ar);font-size:110px;line-height:1.6;color:var(--blue)}
+.hk h3{font-size:26px}
+.hk .sound{display:inline-block;font-family:var(--f-head);font-size:28px;font-weight:700;background:var(--lime);color:var(--ink);border-radius:14px;padding:0 16px;margin:4px 0}
+.hk .urdu{font-size:14px;color:var(--muted);font-weight:800}
+
+/* practice board */
+.board-top{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.seg{border:0;border-radius:12px;padding:8px 14px;font-weight:800;background:var(--ice);color:var(--ink)}
+.seg .ar-inline{font-size:22px;color:var(--coral);margin-left:4px}
+.seg[aria-pressed="true"]{background:var(--blue);color:#fff}
+.seg[aria-pressed="true"] .ar-inline{color:var(--yellow)}
+.board{display:grid;grid-template-columns:repeat(auto-fill,minmax(78px,1fr));gap:8px;direction:rtl;margin-top:12px}
+.btile{background:var(--ice);border-radius:14px;text-align:center;padding:2px 2px 6px;animation:popIn .45s cubic-bezier(.2,1.5,.4,1) both;animation-delay:calc(var(--i,0)*22ms)}
+.btile .ar{font-size:36px;line-height:1.75;color:var(--ink)}
+.btile small{display:block;font-weight:800;color:var(--blue);direction:ltr;font-size:14px}
+.btile.heavy{background:var(--yellow-soft)}
+
+/* equations (sukoon, shaddah) */
+.eq{display:flex;align-items:center;justify-content:center;gap:14px;flex-wrap:wrap;direction:rtl}
+.eq .chip{font-family:var(--f-ar);font-size:58px;line-height:1.55;background:var(--ice);color:var(--ink);border-radius:18px;padding:0 18px;min-width:90px;text-align:center}
+.eq .op{font-family:var(--f-head);font-size:40px;color:var(--coral);font-weight:700}
+.eq .res{background:var(--lime);color:var(--ink)}
+.slide.active .eq > *{animation:popIn .6s cubic-bezier(.2,1.5,.4,1) both;animation-delay:calc(var(--i,0)*350ms + 300ms)}
+@media (max-width:560px){.eq{gap:8px}.eq .chip{font-size:42px;min-width:64px;padding:0 10px}.eq .op{font-size:30px}}
+.eq-say{text-align:center;font-family:var(--f-head);font-size:24px;color:var(--blue);font-weight:700}
+
+/* qalqalah bounce */
+.bounce span{animation:boing 1.4s cubic-bezier(.3,0,.3,1) infinite;animation-delay:calc(var(--i,0)*150ms)}
+@keyframes boing{0%,60%,100%{transform:translateY(0)}20%{transform:translateY(-22px) scale(1.05,.95)}40%{transform:translateY(0) scale(1.1,.9)}}
+
+/* reveal chips (raa / laam) */
+.reveal{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:12px}
+.rv{border:0;background:var(--paper);color:var(--ink);border-radius:18px;padding:8px 12px 12px;box-shadow:0 6px 0 rgba(3,16,60,.35);text-align:center;transition:transform .2s}
+.rv .ar{font-size:44px;line-height:1.7;display:block}
+.rv .ans{display:block;min-height:46px;font-weight:800;font-size:14px;color:var(--muted)}
+.rv .ans .pill{font-size:15px}
+.rv.shown{animation:flip .5s ease}
+.rv.shown.is-heavy{background:var(--yellow-soft)}
+.rv.shown.is-light{background:var(--lime-soft)}
+@keyframes flip{0%{transform:rotateY(0)}50%{transform:rotateY(90deg)}100%{transform:rotateY(0)}}
+
+.rule-card{display:flex;flex-direction:column;gap:6px}
+.rule-card .badge{align-self:flex-start}
+.rule-card ul{margin:4px 0 0;padding-left:20px}
+.rule-card li{margin:3px 0}
+.rule-card li .ar-inline{font-size:26px;color:var(--blue)}
+.heavy-demo{font-family:var(--f-ar);font-size:90px;line-height:1.5;color:var(--ink);text-align:center}
+.slide.active .puff{display:inline-block;animation:puff 1.8s ease-in-out infinite}
+@keyframes puff{0%,100%{transform:scale(1)}50%{transform:scale(1.22);text-shadow:0 0 0 transparent,0 6px 0 rgba(0,0,0,.08)}}
+.slide.active .feather{display:inline-block;animation:feather 2.4s ease-in-out infinite}
+@keyframes feather{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-10px) rotate(5deg)}}
+
+/* sun & moon */
+.sm{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+@media (max-width:640px){.sm{grid-template-columns:1fr}}
+.orb{width:74px;height:74px;border-radius:50%;flex:none}
+.orb.sun{background:radial-gradient(circle at 35% 35%,#fff4a8,var(--yellow) 55%,#f0a400);box-shadow:0 0 0 8px rgba(255,212,59,.25),0 0 40px rgba(255,212,59,.6);animation:spinGlow 6s linear infinite}
+.orb.moon{background:radial-gradient(circle at 70% 40%,transparent 34%,#e9f6ff 35%);box-shadow:none;position:relative}
+.orb.moon::before{content:"";position:absolute;inset:0;border-radius:50%;box-shadow:inset 18px -6px 0 0 #e6f9c4;filter:drop-shadow(0 0 14px rgba(168,230,58,.6))}
+@keyframes spinGlow{50%{box-shadow:0 0 0 14px rgba(255,212,59,.15),0 0 60px rgba(255,212,59,.8)}}
+.sm-head{display:flex;align-items:center;gap:14px}
+.letters-sm{display:flex;flex-wrap:wrap;gap:6px;direction:rtl;margin:10px 0}
+.letters-sm span{font-family:var(--f-ar);font-size:30px;line-height:1.6;min-width:46px;text-align:center;border-radius:12px}
+.sun-card .letters-sm span{background:var(--yellow-soft)}
+.moon-card .letters-sm span{background:var(--lime-soft)}
+.break{display:flex;gap:6px;direction:rtl;align-items:center;flex-wrap:wrap}
+.break span{font-family:var(--f-ar);font-size:30px;line-height:1.6;background:var(--ice);border-radius:10px;padding:0 8px;min-width:44px;text-align:center}
+.break .lam-on{background:var(--lime);animation:glowL 1.6s ease-in-out infinite}
+.break .lam-off{position:relative;animation:fadeL 2.4s ease-in-out infinite}
+.break .lam-off::after{content:"";position:absolute;left:6px;right:6px;top:50%;height:3px;background:var(--coral);border-radius:2px;transform:rotate(-20deg)}
+@keyframes glowL{50%{box-shadow:0 0 0 5px rgba(168,230,58,.4)}}
+@keyframes fadeL{0%,100%{opacity:1}50%{opacity:.3}}
+.break .eqs{font-family:var(--f-head);background:none;color:var(--coral);font-size:22px;min-width:0}
+.break .word{background:none;font-size:36px;color:var(--blue)}
+
+/* noon rules */
+.nr{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+@media (max-width:900px){.nr{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.nr{grid-template-columns:1fr}}
+.nr .card{border-top:10px solid var(--c);display:flex;flex-direction:column;gap:6px}
+.nr .count{font-family:var(--f-head);font-weight:700;font-size:15px;color:var(--muted)}
+.nr .ltrs{font-family:var(--f-ar);font-size:28px;line-height:1.7;direction:rtl;color:var(--ink);word-spacing:6px}
+.nr h3 small{display:block;font-family:var(--f-body);font-size:14px;color:var(--muted);font-weight:800}
+.c-izhar{--c:var(--lime)} .c-idgham{--c:var(--blue-2)} .c-iqlab{--c:var(--coral)} .c-ikhfa{--c:var(--yellow)}
+
+.rule-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:16px;align-items:stretch}
+@media (max-width:820px){.rule-layout{grid-template-columns:1fr}}
+.stage{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;text-align:center}
+.anim{position:relative;height:130px;width:240px;max-width:100%;direction:rtl}
+.anim .n,.anim .nx{position:absolute;top:0;font-family:var(--f-ar);font-size:84px;line-height:1.5}
+.anim .n{right:30px;color:var(--blue)}
+.anim .nx{left:30px;color:var(--ink)}
+.slide.active .a-izhar .n{animation:shine 2s ease-in-out infinite}
+@keyframes shine{0%,100%{text-shadow:0 0 0 transparent;transform:scale(1)}50%{text-shadow:0 0 24px var(--lime);color:var(--lime-ink);transform:scale(1.15)}}
+.slide.active .a-idgham .n{animation:slideMerge 3s ease-in-out infinite}
+@keyframes slideMerge{0%,15%{transform:none;opacity:1}55%,80%{transform:translateX(-120px) scale(.4);opacity:0}100%{transform:none;opacity:1}}
+.slide.active .a-idgham .nx{animation:grow 3s ease-in-out infinite}
+@keyframes grow{0%,40%{transform:none}55%,80%{transform:scale(1.25);color:var(--blue)}100%{transform:none}}
+.a-iqlab .n,.a-iqlab .m{position:absolute;top:0;right:30px;font-family:var(--f-ar);font-size:84px;line-height:1.5}
+.a-iqlab .m{color:var(--coral);opacity:0}
+.slide.active .a-iqlab .n{animation:out 3s ease-in-out infinite}
+.slide.active .a-iqlab .m{animation:in 3s ease-in-out infinite}
+@keyframes out{0%,30%{opacity:1;transform:none}45%,85%{opacity:0;transform:rotateY(90deg)}100%{opacity:1;transform:none}}
+@keyframes in{0%,40%{opacity:0;transform:rotateY(-90deg)}55%,85%{opacity:1;transform:none}100%{opacity:0}}
+.slide.active .a-ikhfa .n{animation:ghost 3s ease-in-out infinite}
+@keyframes ghost{0%,100%{filter:none;opacity:1}50%{filter:blur(6px);opacity:.35}}
+.hum{font-family:var(--f-head);font-weight:700;color:var(--muted);font-size:15px}
+.slide.active .hum{animation:hum 1s ease-in-out infinite}
+@keyframes hum{50%{letter-spacing:.12em;color:var(--blue)}}
+.big-ltrs{font-family:var(--f-ar);font-size:40px;line-height:1.7;direction:rtl;display:flex;flex-wrap:wrap;gap:8px}
+.big-ltrs span{background:var(--ice);border-radius:12px;min-width:54px;text-align:center}
+.note{background:var(--yellow-soft);border-radius:14px;padding:10px 14px;color:var(--ink);font-weight:700}
+.note .ar-inline{font-size:24px;color:var(--blue)}
+
+/* quiz */
+.quiz{max-width:720px;width:100%;margin:0 auto;text-align:center}
+.q-ar{font-size:72px;line-height:1.7;color:var(--blue)}
+.q-text{font-family:var(--f-head);font-size:22px;font-weight:600;margin:0 0 6px}
+.opts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;margin-top:10px}
+@media (max-width:480px){.opts{grid-template-columns:1fr}}
+.opt{border:0;background:var(--ice);color:var(--ink);font-weight:800;font-size:17px;padding:12px;border-radius:14px;box-shadow:0 4px 0 #a9bde8}
+.opt.right{background:var(--lime);box-shadow:0 4px 0 #6fa514;animation:bump .4s}
+.opt.wrong{background:#ffd9d4;box-shadow:0 4px 0 #f09c90;animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.q-meta{display:flex;justify-content:space-between;align-items:center;font-weight:800;color:var(--muted);margin-bottom:6px}
+.stars{color:var(--yellow-ink);letter-spacing:2px}
+.q-feedback{min-height:28px;font-weight:800;margin-top:10px}
+
+/* finish */
+.finish{text-align:center;align-items:center}
+.trophy{font-size:clamp(80px,14vw,140px);line-height:1.5;color:var(--yellow);font-family:var(--f-ar)}
+.confetti{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.confetti i{position:absolute;top:-20px;width:12px;height:12px;border-radius:3px;animation:fall linear infinite}
+@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+
+/* controls */
+.controls{display:flex;align-items:center;gap:12px;padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));background:rgba(4,20,64,.45);backdrop-filter:blur(6px)}
+.nav-btn{border:0;width:48px;height:48px;border-radius:14px;background:var(--yellow);color:var(--ink);font-size:24px;font-weight:800;box-shadow:0 4px 0 #c89a00;flex:none}
+.nav-btn:disabled{opacity:.35;cursor:default}
+.nav-btn.next{background:var(--lime);box-shadow:0 4px 0 #6fa514}
+.progress{flex:1;height:12px;background:rgba(255,255,255,.15);border-radius:999px;overflow:hidden;min-width:0}
+.progress span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--lime),var(--yellow));border-radius:999px;transition:width .4s}
+.counter{font-family:var(--f-head);font-weight:600;min-width:58px;text-align:center;font-variant-numeric:tabular-nums}
+
+/* menu */
+.menu[hidden]{display:none}
+.menu{position:absolute;inset:0;z-index:20;background:rgba(4,16,50,.75);display:grid;place-items:center;padding:20px}
+.menu-card{background:var(--paper);color:var(--ink);border-radius:24px;padding:20px;width:min(520px,100%);max-height:85vh;overflow:auto}
+.menu-card ol{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:6px}
+.menu-card button.jump{width:100%;text-align:left;border:0;background:var(--ice);color:var(--ink);border-radius:12px;padding:10px 14px;font-weight:800}
+.menu-card button.jump:hover{background:var(--lime)}
+
+@media (max-width:600px){
+  .brand span.t{display:none}
+  .lesson-tag{max-width:60vw}
+}
+
+/* ---- added lessons ---- */
+.beats{display:flex;gap:8px;justify-content:center;margin:8px 0 4px}
+.beats i{width:16px;height:16px;border-radius:50%;background:var(--line);display:block}
+.slide.active .beats i{animation:beatOn .35s ease both;animation-delay:calc(var(--i,0)*350ms + 700ms)}
+.beats i.opt-beat{outline:2px dashed var(--muted);outline-offset:2px}
+@keyframes beatOn{from{background:var(--line);transform:scale(.6)}to{background:var(--lime-ink);transform:scale(1)}}
+.big-ar{font-family:var(--f-ar);direction:rtl;unicode-bidi:isolate;font-size:64px;line-height:2.1;color:var(--blue);text-align:center}
+.big-ar.sm{font-size:40px;line-height:2.1}
+.big-ar.soft{color:var(--lime-ink)}
+.slide.active .big-ar.soft{animation:feather 2.6s ease-in-out infinite}
+.sound-pill{display:inline-block;font-family:var(--f-head);font-weight:700;font-size:22px;background:var(--lime);color:var(--ink);border-radius:14px;padding:2px 16px;margin:4px auto}
+.sound-pill .hl{background:var(--yellow);border-radius:6px;padding:0 4px}
+.rule-card .sound-pill{align-self:center}
+.rule-card .beats{align-self:center}
+.madd-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr));gap:14px}
+.madd{border-top:10px solid var(--c);display:flex;flex-direction:column;gap:4px;text-align:center}
+.madd h3{font-size:19px}
+.madd h3 small{display:block;font-family:var(--f-body);font-size:13px;color:var(--muted);font-weight:800}
+.madd .count{font-family:var(--f-head);font-weight:700;color:var(--blue)}
+.madd p{font-size:14px;color:var(--muted)}
+.muq{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,170px),1fr));gap:12px}
+.muq .card{text-align:center;display:flex;flex-direction:column;align-items:center;gap:2px;padding:12px}
+.muq .big-ar{font-size:52px;line-height:2.1}
+.muq b{font-size:15px}
+.muq .src,.ss-grid .src{font-size:13px;color:var(--muted)}
+.letters-row{display:flex;flex-wrap:wrap;gap:8px;direction:rtl;margin:8px 0}
+.letters-row span{font-family:var(--f-ar);font-size:32px;line-height:1.8;min-width:50px;text-align:center;background:var(--ice);border-radius:12px;color:var(--ink)}
+.tr-line{font-weight:800;color:var(--blue);margin:0}
+.eq .chip.bridge{background:var(--yellow);color:var(--ink)}
+.slide.active .eq .chip.bridge{animation:popIn .6s cubic-bezier(.2,1.5,.4,1) both,glowL 1.6s ease-in-out 1.6s infinite}
+.ss-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:14px}
+.ss-grid .card{text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px}
+.pause{font-family:var(--f-head);font-weight:700;font-size:13px;color:#fff;background:var(--coral);border-radius:999px;padding:2px 10px}
+.slide.active .pause{animation:fadeL 1.6s ease-in-out infinite}
+.lips{width:120px;height:56px;border-radius:50%;border:10px solid var(--coral);margin:10px auto}
+.slide.active .lips{animation:lipsRound 2.4s ease-in-out infinite}
+@keyframes lipsRound{0%,25%,100%{width:120px;height:56px}50%,75%{width:62px;height:62px}}
+.ex .muted{font-size:13px}
+.iq{font-family:'Scheherazade New',var(--f-ar)}
+.qn{display:inline-block;font-size:.7em;line-height:1.6;color:#d4452f;background:var(--yellow-soft);border-radius:8px;padding:0 6px;vertical-align:.45em;margin-inline:2px}
+.sk{display:inline-flex;direction:rtl;align-items:center;gap:10px;flex-wrap:wrap}
+@media (max-width:560px){.big-ar{font-size:46px}.muq .big-ar{font-size:44px}.big-ar.sm{font-size:34px}}
+
+
+/* ---- waqf lessons ---- */
+.gold{margin:6px 0 0;padding-left:22px;display:grid;gap:6px;font-size:16px}
+.wq{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:14px}
+.wq .card{display:flex;flex-direction:column;gap:6px}
+.wq h3{font-size:17px}
+.stopx{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);direction:rtl;align-items:center;gap:8px}
+.stopx span{font-family:var(--f-ar);font-size:30px;line-height:2;border-radius:12px;padding:0 8px;text-align:center;white-space:nowrap}
+.stopx .from{background:var(--ice);color:var(--ink)}
+.stopx .to{background:var(--lime);color:var(--ink)}
+.stopx .arr{font-family:var(--f-head);font-size:26px;color:var(--coral);padding:0}
+.legend-row{display:flex;flex-wrap:wrap;gap:8px}
+.legend-row .pill{font-size:14px;padding:4px 12px}
+.signs{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,170px),1fr));gap:12px}
+.sign{background:var(--paper);color:var(--ink);border-radius:18px;padding:10px 12px 12px;box-shadow:0 6px 0 rgba(3,16,60,.35);display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;border-top:10px solid var(--c)}
+.sign .sg{font-family:var(--f-ar);font-size:44px;line-height:1.9;min-height:84px;display:flex;align-items:center;justify-content:center;color:var(--c2,var(--blue))}
+.sign .sg.dots{font-family:var(--f-body);font-size:34px;letter-spacing:4px}
+.sign b{font-family:var(--f-head);font-size:17px}
+.sign small{color:var(--muted);font-weight:700;font-size:13px;line-height:1.35}
+.ring{display:block;width:46px;height:46px;border-radius:50%;border:4px double var(--coral)}
+.s-stop{--c:var(--coral);--c2:#d4452f}.s-better{--c:var(--yellow);--c2:var(--yellow-ink)}.s-cont{--c:var(--blue-2)}.s-go{--c:var(--lime);--c2:var(--lime-ink)}.s-pause{--c:#b28cff;--c2:#6a3fd0}.s-same{--c:var(--line);--c2:var(--ink)}
+.slide.active .sign .sg{animation:popIn .6s cubic-bezier(.2,1.5,.4,1) both;animation-delay:calc(var(--i,0)*90ms + 350ms)}
+
+
+.cmp{display:grid;grid-template-columns:minmax(0,.7fr) minmax(0,1fr) minmax(0,1fr);gap:10px}
+.cmp-head{border-radius:14px;padding:8px 12px;text-align:center;color:var(--ink)}
+.cmp-head b{display:block;font-family:var(--f-head);font-size:20px}
+.cmp-head small{font-weight:700;font-size:13px}
+.h-ib{background:var(--lime)}.h-ts{background:var(--yellow)}
+.cmp-src{display:flex;flex-direction:column;justify-content:center;font-weight:800;color:#e9f0ff;font-size:14px}
+.cmp-src small{color:#b9c8ee;font-weight:700}
+.cmp-cell{background:var(--paper);border-radius:16px;padding:6px 10px;display:flex;flex-direction:column;align-items:center;text-align:center;box-shadow:0 5px 0 rgba(3,16,60,.35);border-top:6px solid var(--c)}
+.c-ib{--c:var(--lime)}.c-ts{--c:var(--yellow)}
+.cmp-cell .ar{font-size:36px;line-height:2;color:var(--ink)}
+.cmp-cell .tr{font-weight:800;color:var(--blue);font-size:14px}
+@media (max-width:560px){.cmp{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}.cmp-head:first-child{display:none}.cmp-src{grid-column:1/-1;flex-direction:row;gap:6px;margin-top:6px}.cmp-cell .ar{font-size:28px}}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
+</style>
+
+<div class="app">
+  <div class="sky" aria-hidden="true" id="sky"></div>
+
+  <header class="topbar">
+    <div class="brand"><span class="brand-badge"><svg viewBox="0 0 40 40" width="40" height="40" aria-hidden="true"><path d="M20 3.5l2.3 3.9 4.4-.9-.9 4.4 3.9 2.3-3.9 2.3.9 4.4-4.4-.9L20 22.9l-2.3-3.9-4.4.9.9-4.4-3.9-2.3 3.9-2.3-.9-4.4 4.4.9z" fill="#ffd43b"/><path d="M20 26c-4-2.6-8.6-3.4-14-2.6v-9c5.4-.8 10 0 14 2.6 4-2.6 8.6-3.4 14-2.6v9c-5.4-.8-10 0-14 2.6z" fill="#ffffff"/><path d="M20 17v9" stroke="#1f63e6" stroke-width="1.6"/><path d="M8 16.6c3.6-.4 6.9.2 9.8 1.8M8 19.6c3.6-.4 6.9.2 9.8 1.8M32 16.6c-3.6-.4-6.9.2-9.8 1.8M32 19.6c-3.6-.4-6.9.2-9.8 1.8" stroke="#a8e63a" stroke-width="1.3" fill="none" stroke-linecap="round"/><path d="M9 37l22-9M31 37L9 28" stroke="#a8e63a" stroke-width="3" stroke-linecap="round"/></svg></span><span class="t">Little Qari Tajweed</span></div>
+    <span class="lesson-tag" id="lessonTag">Welcome</span>
+    <button class="icon-btn" id="menuBtn" aria-haspopup="dialog">Lessons</button>
+  </header>
+
+  <main class="deck" id="deck">
+
+    <!-- 1 COVER -->
+    <section class="slide" data-id="start" data-lesson="Welcome">
+      <div class="inner cover">
+        <div class="cover-word ar pop" style="--i:0">اِقْرَأْ</div>
+        <p class="lead pop" style="--i:1"><b>"Read!"</b> was the very first word of the Quran sent to Prophet Muhammad ﷺ.</p>
+        <h1 class="pop" style="--i:2">Little Qari Tajweed</h1>
+        <p class="lead pop" style="--i:3">Learn to read the Quran beautifully and correctly, one small step at a time.</p>
+        <div class="cover-colors pop" style="--i:4"><span style="background:var(--lime)"></span><span style="background:var(--blue-2)"></span><span style="background:var(--yellow)"></span></div>
+        <button class="btn pop" style="--i:5" data-go="1">Let's begin →</button>
+      </div>
+    </section>
+
+    <!-- 2 ROADMAP -->
+    <section class="slide" data-id="map" data-lesson="Your journey">
+      <div class="inner">
+        <span class="eyebrow pop">Your journey</span>
+        <h2 class="pop" style="--i:1">26 steps to reading well</h2>
+        <p class="lead pop" style="--i:2">Finish each step before moving to the next. Tap a step to jump to it.</p>
+        <div class="road" id="road"></div>
+      </div>
+    </section>
+
+    <!-- 3 ALPHABET -->
+    <section class="slide" data-id="letters" data-lesson="Step 1 · The letters">
+      <div class="inner">
+        <span class="eyebrow pop">Step 1 · Huroof</span>
+        <h2 class="pop" style="--i:1">Meet the 29 letters</h2>
+        <p class="lead pop" style="--i:2">Arabic is read from <b>right to left</b>. Tap any letter to learn where its sound comes from.</p>
+        <div class="alpha-wrap">
+          <div>
+            <div class="alpha" id="alpha"></div>
+            <div class="legend" style="margin-top:12px"><span><i style="background:var(--yellow-soft);outline:2px solid #d3a800"></i>Heavy (full-mouth) letter</span><span><i style="background:var(--paper)"></i>Light letter</span></div>
+          </div>
+          <div class="card spot pop" style="--i:3">
+            <div class="spot-letter ar" id="spotL">ب</div>
+            <h3 id="spotN">Baa</h3>
+            <div class="say" id="spotS">Sound: "b"</div>
+            <p id="spotT" class="muted">Press both lips together, like "b" in ball.</p>
+            <div id="spotH"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 HEAVY + LOOK-ALIKES -->
+    <section class="slide" data-id="heavy" data-lesson="Step 1 · The letters">
+      <div class="inner">
+        <span class="eyebrow pop">Step 1 · Huroof</span>
+        <h2 class="pop" style="--i:1">Heavy letters and look-alike letters</h2>
+        <div class="grid g2">
+          <div class="card pop" style="--i:2">
+            <h3>7 heavy letters <span class="pill heavy">full mouth</span></h3>
+            <p class="muted">Raise the back of your tongue and fill your mouth, like a big balloon. These letters are <b>always heavy</b>.</p>
+            <div class="big-row" style="margin:12px 0"><span style="--i:0">خ</span><span style="--i:1">ص</span><span style="--i:2">ض</span><span style="--i:3">غ</span><span style="--i:4">ط</span><span style="--i:5">ق</span><span style="--i:6">ظ</span></div>
+            <p>Remember them with: <span class="ar-inline" style="font-size:30px;color:var(--blue)">خُصَّ ضَغْطٍ قِظْ</span></p>
+            <p class="muted">All other letters are light (thin), except <b>ر</b> and the <b>ل</b> of Allah, which can be either. You will learn those in Steps 10 and 11.</p>
+          </div>
+          <div class="card pop" style="--i:3">
+            <h3>Count the dots!</h3>
+            <p class="muted">Some letters have the same shape. Only the dots tell them apart.</p>
+            <div style="display:grid;gap:10px;margin-top:10px">
+              <div class="fam"><span>ب</span><span>ت</span><span>ث</span><span>ن</span><span>ي</span></div>
+              <div class="fam"><span>ج</span><span>ح</span><span>خ</span></div>
+              <div class="fam"><span>د</span><span>ذ</span><span>ر</span><span>ز</span></div>
+              <div class="fam"><span>س</span><span>ش</span><span>ص</span><span>ض</span></div>
+              <div class="fam"><span>ط</span><span>ظ</span><span>ع</span><span>غ</span><span>ف</span><span>ق</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 LETTER SHAPES -->
+    <section class="slide" data-id="shapes" data-lesson="Step 2 · Joined letters">
+      <div class="inner">
+        <span class="eyebrow pop">Step 2 · Murakkabat</span>
+        <h2 class="pop" style="--i:1">Letters change shape when they hold hands</h2>
+        <p class="lead pop" style="--i:2">A letter can be at the <b>start</b>, <b>middle</b> or <b>end</b> of a word. Its body stays the same, so look for it!</p>
+        <div class="grid g2">
+          <div class="card pop tbl-scroll" style="--i:3">
+            <table class="forms">
+              <thead><tr><th></th><th>Alone</th><th>Start</th><th>Middle</th><th>End</th></tr></thead>
+              <tbody>
+                <tr><td class="nm">Baa</td><td>ب</td><td>بـ</td><td>ـبـ</td><td>ـب</td></tr>
+                <tr><td class="nm">Jeem</td><td>ج</td><td>جـ</td><td>ـجـ</td><td>ـج</td></tr>
+                <tr><td class="nm">'Ain</td><td>ع</td><td>عـ</td><td>ـعـ</td><td>ـع</td></tr>
+                <tr><td class="nm">Haa</td><td>ه</td><td>هـ</td><td>ـهـ</td><td>ـه</td></tr>
+                <tr><td class="nm">Kaaf</td><td>ك</td><td>كـ</td><td>ـكـ</td><td>ـك</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="card pop" style="--i:4">
+            <h3>6 shy letters</h3>
+            <p class="muted">These letters hold the hand of the letter <b>before</b> them, but never the letter <b>after</b> them.</p>
+            <div class="big-row" style="margin:14px 0"><span style="--i:0;background:var(--lime);box-shadow:0 5px 0 #6fa514">ا</span><span style="--i:1;background:var(--lime);box-shadow:0 5px 0 #6fa514">د</span><span style="--i:2;background:var(--lime);box-shadow:0 5px 0 #6fa514">ذ</span><span style="--i:3;background:var(--lime);box-shadow:0 5px 0 #6fa514">ر</span><span style="--i:4;background:var(--lime);box-shadow:0 5px 0 #6fa514">ز</span><span style="--i:5;background:var(--lime);box-shadow:0 5px 0 #6fa514">و</span></div>
+            <p>Example: <span class="ar-inline" style="font-size:34px;color:var(--blue)">دَارٌ</span> and <span class="ar-inline" style="font-size:34px;color:var(--blue)">وَرْدٌ</span> have gaps inside them.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 JOINING ANIMATION -->
+    <section class="slide" data-id="joining" data-lesson="Step 2 · Joined letters">
+      <div class="inner">
+        <span class="eyebrow pop">Step 2 · Murakkabat</span>
+        <h2 class="pop" style="--i:1">Watch the letters join</h2>
+        <p class="lead pop" style="--i:2">Say each letter, then read the whole word together.</p>
+        <div class="joiners" id="joiners">
+          <div class="card joiner pop" style="--i:3"><div class="jstage"><div class="apart"><span>ب</span><span>ا</span><span>ب</span></div><div class="together">باب</div></div><div class="mean">Baa + Alif + Baa</div></div>
+          <div class="card joiner pop" style="--i:4"><div class="jstage"><div class="apart"><span>ق</span><span>ل</span><span>م</span></div><div class="together">قلم</div></div><div class="mean">Qaaf + Laam + Meem</div></div>
+          <div class="card joiner pop" style="--i:5"><div class="jstage"><div class="apart"><span>ك</span><span>ت</span><span>ب</span></div><div class="together">كتب</div></div><div class="mean">Kaaf + Taa + Baa</div></div>
+          <div class="card joiner pop" style="--i:6"><div class="jstage"><div class="apart"><span>ل</span><span>ا</span></div><div class="together">لا</div></div><div class="mean">Laam + Alif = Laam-Alif</div></div>
+        </div>
+        <div class="pop" style="--i:7;display:flex;gap:10px;flex-wrap:wrap"><button class="btn lime" id="joinBtn">Join them!</button><button class="btn ghost" id="splitBtn">Split them</button></div>
+      </div>
+    </section>
+
+    <!-- 7 HARAKAT -->
+    <section class="slide" data-id="harakat" data-lesson="Step 3 · Harakat">
+      <div class="inner">
+        <span class="eyebrow pop">Step 3 · Harakat</span>
+        <h2 class="pop" style="--i:1">Three little marks make letters talk</h2>
+        <p class="lead pop" style="--i:2">A letter alone is silent. Add a mark and it makes a <b>short</b> sound, just one beat.</p>
+        <div class="grid g3">
+          <div class="card hk pop" style="--i:3"><span class="mark ar-inline">ـَ</span><div class="letter">بَ</div><h3>Fatha</h3><div class="urdu">Zabar · a line above</div><div class="sound">ba</div><p class="muted">Open your mouth.</p></div>
+          <div class="card hk pop" style="--i:4"><span class="mark ar-inline">ـِ</span><div class="letter">بِ</div><h3>Kasra</h3><div class="urdu">Zer · a line below</div><div class="sound">bi</div><p class="muted">Lower your jaw, like a little smile.</p></div>
+          <div class="card hk pop" style="--i:5"><span class="mark ar-inline">ـُ</span><div class="letter">بُ</div><h3>Damma</h3><div class="urdu">Pesh · a small waw on top</div><div class="sound">bu</div><p class="muted">Make your lips round.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8 HARAKAT PRACTICE -->
+    <section class="slide" data-id="practice" data-lesson="Step 3 · Harakat">
+      <div class="inner">
+        <span class="eyebrow pop">Step 3 · Practice board</span>
+        <h2 class="pop" style="--i:1">Read the whole row</h2>
+        <div class="card pop" style="--i:2">
+          <div class="board-top" data-board="b1" data-modes="fatha,kasra,damma"></div>
+          <div class="board" id="b1"></div>
+          <p class="muted" style="margin-top:10px">Yellow tiles are heavy letters. Read them with a full mouth, so <span class="ar-inline" style="font-size:22px">صَ</span> sounds deeper than <span class="ar-inline" style="font-size:22px">سَ</span>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9 TANWEEN -->
+    <section class="slide" data-id="tanween" data-lesson="Step 4 · Tanween">
+      <div class="inner">
+        <span class="eyebrow pop">Step 4 · Tanween</span>
+        <h2 class="pop" style="--i:1">Double marks add an "n" sound</h2>
+        <p class="lead pop" style="--i:2">Tanween is a harakah written twice. You read it as the vowel plus a hidden <b>Noon sakin</b> (نْ).</p>
+        <div class="grid g3">
+          <div class="card hk pop" style="--i:3"><span class="mark ar-inline">ـً</span><div class="letter">بًا</div><h3>Fathatan</h3><div class="urdu">Do zabar</div><div class="sound">ban</div></div>
+          <div class="card hk pop" style="--i:4"><span class="mark ar-inline">ـٍ</span><div class="letter">بٍ</div><h3>Kasratan</h3><div class="urdu">Do zer</div><div class="sound">bin</div></div>
+          <div class="card hk pop" style="--i:5"><span class="mark ar-inline">ـٌ</span><div class="letter">بٌ</div><h3>Dammatan</h3><div class="urdu">Do pesh</div><div class="sound">bun</div></div>
+        </div>
+        <div class="card pop" style="--i:6">
+          <div class="board-top" data-board="b2" data-modes="fathatan,kasratan,dammatan"></div>
+          <div class="board" id="b2"></div>
+          <p class="muted" style="margin-top:10px">With Fathatan an extra Alif is usually written after the letter, but it is not read while reading on.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 JAZM -->
+    <section class="slide" data-id="jazm" data-lesson="Step 5 · Jazm">
+      <div class="inner">
+        <span class="eyebrow pop">Step 5 · Jazm (Sukoon)</span>
+        <h2 class="pop" style="--i:1">Jazm means: stop on the letter</h2>
+        <p class="lead pop" style="--i:2">A letter with Jazm <span class="ar-inline" style="font-size:28px;color:var(--yellow)">ـْ</span> has no vowel. Join it to the letter <b>before</b> it.</p>
+        <div class="card pop" style="--i:3">
+          <div class="eq"><span class="chip" style="--i:0">اَ</span><span class="op" style="--i:1">+</span><span class="chip" style="--i:2">بْ</span><span class="op" style="--i:3">=</span><span class="chip res" style="--i:4">اَبْ</span></div>
+          <div class="eq-say">a + b = "ab"</div>
+        </div>
+        <div class="card pop" style="--i:4">
+          <div class="board-top" data-board="b3" data-modes="sukoon"></div>
+          <div class="board" id="b3"></div>
+        </div>
+        <div class="grid g4">
+          <div class="card pop" style="--i:5;text-align:center"><div class="ar" style="font-size:44px">قُلْ</div><b>qul</b></div>
+          <div class="card pop" style="--i:6;text-align:center"><div class="ar" style="font-size:44px">لَمْ</div><b>lam</b></div>
+          <div class="card pop" style="--i:7;text-align:center"><div class="ar" style="font-size:44px">مِنْ</div><b>min</b></div>
+          <div class="card pop" style="--i:8;text-align:center"><div class="ar" style="font-size:44px">هَلْ</div><b>hal</b></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 QALQALAH -->
+    <section class="slide" data-id="qalqalah" data-lesson="Step 5 · Jazm">
+      <div class="inner">
+        <span class="eyebrow pop">Step 5 · Bonus rule</span>
+        <h2 class="pop" style="--i:1">Bouncy letters: Qalqalah</h2>
+        <p class="lead pop" style="--i:2">When these 5 letters have Jazm, give them a small <b>bounce</b> so the sound comes out clearly.</p>
+        <div class="card pop" style="--i:3;text-align:center">
+          <div class="big-row bounce" style="justify-content:center;margin:20px 0 6px"><span style="--i:0">ق</span><span style="--i:1">ط</span><span style="--i:2">ب</span><span style="--i:3">ج</span><span style="--i:4">د</span></div>
+          <p>Remember: <span class="ar-inline" style="font-size:34px;color:var(--blue)">قُطْبُ جَدٍّ</span> <span class="muted">(Qutbu Jad)</span></p>
+        </div>
+        <div class="card pop" style="--i:4">
+          <div class="ex"><span class="ar">لَمْ يَلِدْ</span><span class="tr">lam yalid</span><span class="src">Al-Ikhlas</span></div>
+          <div class="ex"><span class="ar">اِقْرَأْ</span><span class="tr">iqra'</span><span class="src">Al-'Alaq</span></div>
+          <div class="ex"><span class="ar">اَلْفَلَقْ</span><span class="tr">al-falaq (when you stop)</span><span class="src">Al-Falaq</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · KHARI HARAKAT -->
+    <section class="slide" data-id="khari" data-lesson="Step 6 · Khari Harakat">
+      <div class="inner">
+        <span class="eyebrow pop">Step 6 · Khari Harakat</span>
+        <h2 class="pop" style="--i:1">Standing marks make a long sound</h2>
+        <p class="lead pop" style="--i:2">A <b>standing</b> (khari) mark is read long: stretch it for <b>2 beats</b>, like a short sound said twice.</p>
+        <div class="grid g3">
+          <div class="card hk pop" style="--i:3"><div class="letter">بٰ</div><h3>Khari Zabar</h3><div class="urdu">A small standing Alif on top</div><div class="sound">baa</div><div class="beats" aria-label="2 beats"><i style="--i:0"></i><i style="--i:1"></i></div></div>
+          <div class="card hk pop" style="--i:4"><div class="letter">بٖ</div><h3>Khari Zer</h3><div class="urdu">A small standing line below</div><div class="sound">bee</div><div class="beats" aria-label="2 beats"><i style="--i:0"></i><i style="--i:1"></i></div></div>
+          <div class="card hk pop" style="--i:5"><div class="letter">بٗ</div><h3>Ulta Pesh</h3><div class="urdu">An upside-down Pesh</div><div class="sound">boo</div><div class="beats" aria-label="2 beats"><i style="--i:0"></i><i style="--i:1"></i></div></div>
+        </div>
+        <div class="card pop" style="--i:6">
+          <div class="ex"><span class="ar">هٰذَا</span><span class="tr">haa-dhaa</span><span class="src">Quraysh</span></div>
+          <div class="ex"><span class="ar">اَلرَّحْمٰنِ</span><span class="tr">ar-raḥ-maa-ni</span><span class="src">Al-Fatihah</span></div>
+          <div class="ex"><span class="ar">بِهٖ</span><span class="tr">bi-hee</span></div>
+          <div class="ex"><span class="ar">لَهٗ</span><span class="tr">la-hoo</span><span class="src">Al-Ikhlas</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · HUROOF-E-MADDA -->
+    <section class="slide" data-id="madda-letters" data-lesson="Step 7 · Huroof-e-Madda">
+      <div class="inner">
+        <span class="eyebrow pop">Step 7 · Huroof-e-Madda</span>
+        <h2 class="pop" style="--i:1">The 3 stretchy letters</h2>
+        <p class="lead pop" style="--i:2">These letters have no mark of their own. They <b>stretch</b> the sound before them for <b>2 beats</b>.</p>
+        <div class="grid g3">
+          <div class="card rule-card pop" style="--i:3;text-align:center"><div class="big-ar">بَا</div><p><b>Alif</b> after <b>Fatha</b></p><div class="sound-pill">baa</div><div class="beats"><i style="--i:0"></i><i style="--i:1"></i></div></div>
+          <div class="card rule-card pop" style="--i:4;text-align:center"><div class="big-ar">بُوْ</div><p><b>Waaw sakin</b> after <b>Damma</b></p><div class="sound-pill">boo</div><div class="beats"><i style="--i:0"></i><i style="--i:1"></i></div></div>
+          <div class="card rule-card pop" style="--i:5;text-align:center"><div class="big-ar">بِيْ</div><p><b>Yaa sakin</b> after <b>Kasra</b></p><div class="sound-pill">bee</div><div class="beats"><i style="--i:0"></i><i style="--i:1"></i></div></div>
+        </div>
+        <div class="card pop" style="--i:6">
+          <div class="ex"><span class="ar">قَالَ</span><span class="tr">qaa-la</span></div>
+          <div class="ex"><span class="ar">يَقُوْلُ</span><span class="tr">ya-qoo-lu</span></div>
+          <div class="ex"><span class="ar">قِيْلَ</span><span class="tr">qee-la</span></div>
+          <div class="ex"><span class="ar">نُوْحِيْهَا</span><span class="tr">noo-ḥee-haa (all three!)</span><span class="src">Yusuf</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · HUROOF-E-LEEN -->
+    <section class="slide" data-id="leen" data-lesson="Step 8 · Huroof-e-Leen">
+      <div class="inner">
+        <span class="eyebrow pop">Step 8 · Huroof-e-Leen</span>
+        <h2 class="pop" style="--i:1">The 2 soft letters</h2>
+        <p class="lead pop" style="--i:2">When <b>Waaw sakin</b> or <b>Yaa sakin</b> comes after a <b>Fatha</b>, say it <b>softly and smoothly</b>, with no jerk.</p>
+        <div class="grid g2">
+          <div class="card rule-card pop" style="--i:3;text-align:center"><div class="big-ar soft">بَوْ</div><p><b>Waaw sakin</b> after <b>Fatha</b></p><div class="sound-pill">baw</div></div>
+          <div class="card rule-card pop" style="--i:4;text-align:center"><div class="big-ar soft">بَيْ</div><p><b>Yaa sakin</b> after <b>Fatha</b></p><div class="sound-pill">bay</div></div>
+        </div>
+        <div class="grid g2">
+          <div class="card pop" style="--i:5">
+            <div class="ex"><span class="ar">خَوْفٍ</span><span class="tr">khawf</span><span class="src">Quraysh</span></div>
+            <div class="ex"><span class="ar">اَلْبَيْتِ</span><span class="tr">al-bayt</span><span class="src">Quraysh</span></div>
+            <div class="ex"><span class="ar">قُرَيْشٍ</span><span class="tr">qu-raysh</span><span class="src">Quraysh</span></div>
+          </div>
+          <div class="card pop" style="--i:6">
+            <h3>Madda or Leen?</h3>
+            <p class="muted">Look at the mark <b>before</b> the Waaw or Yaa.</p>
+            <div class="ex"><span class="ar">بُوْ</span><span class="tr">boo</span><span class="pill light">Madda · Damma before</span></div>
+            <div class="ex"><span class="ar">بَوْ</span><span class="tr">baw</span><span class="pill heavy">Leen · Fatha before</span></div>
+            <p class="muted" style="margin-top:6px">When you <b>stop</b> on a word like <span class="ar-inline" style="font-size:24px">خَوْفْ</span>, you may stretch the Leen for 2, 4 or 6 beats.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 12 TASHDEED -->
+    <section class="slide" data-id="tashdeed" data-lesson="Step 9 · Tashdeed">
+      <div class="inner">
+        <span class="eyebrow pop">Step 9 · Tashdeed (Shaddah)</span>
+        <h2 class="pop" style="--i:1">Shaddah: say the letter twice</h2>
+        <p class="lead pop" style="--i:2">The little <b>w</b> shape <span class="ar-inline" style="font-size:28px;color:var(--yellow)">ـّ</span> means the letter is doubled: first with Jazm, then with its harakah.</p>
+        <div class="card pop" style="--i:3">
+          <div class="eq"><span class="chip" style="--i:0">رَبْ</span><span class="op" style="--i:1">+</span><span class="chip" style="--i:2">بَ</span><span class="op" style="--i:3">=</span><span class="chip res" style="--i:4">رَبَّ</span></div>
+          <div class="eq-say">rab + ba = "rab-ba"</div>
+        </div>
+        <div class="grid g2">
+          <div class="card pop" style="--i:4">
+            <div class="ex"><span class="ar">رَبِّ</span><span class="tr">rab-bi</span><span class="src">Al-Fatihah</span></div>
+            <div class="ex"><span class="ar">اِيَّاكَ</span><span class="tr">iy-yaaka</span><span class="src">Al-Fatihah</span></div>
+            <div class="ex"><span class="ar">مُحَمَّدٌ</span><span class="tr">muḥam-mad</span><span class="src">Muhammad</span></div>
+          </div>
+          <div class="card pop" style="--i:5">
+            <h3>Humming letters: Ghunnah</h3>
+            <p class="muted">When <b>ن</b> or <b>م</b> has a Shaddah, hum through your nose for <b>2 beats</b>.</p>
+            <div class="ex"><span class="ar">اِنَّ</span><span class="tr">in-nnn-a</span><span class="hum">hmmm</span></div>
+            <div class="ex"><span class="ar">ثُمَّ</span><span class="tr">thum-mmm-a</span><span class="hum">hmmm</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 13 RAA -->
+    <section class="slide" data-id="raa" data-lesson="Step 10 · Rules of Raa">
+      <div class="inner">
+        <span class="eyebrow pop">Step 10 · Rules of Raa</span>
+        <h2 class="pop" style="--i:1">Is <span class="ar-inline">ر</span> heavy or light?</h2>
+        <div class="grid g2">
+          <div class="card rule-card pop" style="--i:2;background:var(--yellow-soft)">
+            <span class="pill heavy badge">Heavy · Tafkheem</span>
+            <div class="heavy-demo"><span class="puff">رَ</span></div>
+            <ul>
+              <li>Raa has <b>Fatha</b> or <b>Damma</b>: <span class="ar-inline">رَ رُ</span></li>
+              <li>Raa has Jazm and the letter before has <b>Fatha</b> or <b>Damma</b>: <span class="ar-inline">مَرْيَمَ</span></li>
+            </ul>
+          </div>
+          <div class="card rule-card pop" style="--i:3;background:var(--lime-soft)">
+            <span class="pill light badge">Light · Tarqeeq</span>
+            <div class="heavy-demo"><span class="feather">رِ</span></div>
+            <ul>
+              <li>Raa has <b>Kasra</b>: <span class="ar-inline">رِ</span></li>
+              <li>Raa has Jazm and the letter before has <b>Kasra</b>: <span class="ar-inline">فِرْعَوْنَ</span></li>
+            </ul>
+          </div>
+        </div>
+        <p class="lead pop" style="--i:4">Tap each word to check your answer.</p>
+        <div class="reveal" id="raaReveal"></div>
+      </div>
+    </section>
+
+    <!-- 14 LAAM OF ALLAH -->
+    <section class="slide" data-id="allah" data-lesson="Step 11 · Rules of Laam">
+      <div class="inner">
+        <span class="eyebrow pop">Step 11 · Rules of Laam (1)</span>
+        <h2 class="pop" style="--i:1">The Laam in the name <span class="ar-inline">اللّٰه</span></h2>
+        <p class="lead pop" style="--i:2">Look at the letter <b>before</b> the word Allah.</p>
+        <div class="grid g2">
+          <div class="card rule-card pop" style="--i:3;background:var(--yellow-soft)">
+            <span class="pill heavy badge">Heavy</span>
+            <div class="heavy-demo" style="font-size:72px"><span class="puff">اللّٰهُ</span></div>
+            <p>After <b>Fatha</b> or <b>Damma</b>, or when you start with it, say it with a full mouth.</p>
+          </div>
+          <div class="card rule-card pop" style="--i:4;background:var(--lime-soft)">
+            <span class="pill light badge">Light</span>
+            <div class="heavy-demo" style="font-size:72px"><span class="feather">لِلّٰهِ</span></div>
+            <p>After <b>Kasra</b>, say it thin and light.</p>
+          </div>
+        </div>
+        <div class="reveal" id="allahReveal"></div>
+      </div>
+    </section>
+
+    <!-- 15 SUN AND MOON -->
+    <section class="slide" data-id="sun-moon" data-lesson="Step 11 · Rules of Laam">
+      <div class="inner">
+        <span class="eyebrow pop">Step 11 · Rules of Laam (2)</span>
+        <h2 class="pop" style="--i:1">The Laam of <span class="ar-inline">اَلْ</span>: Moon letters and Sun letters</h2>
+        <div class="sm">
+          <div class="card moon-card pop" style="--i:2">
+            <div class="sm-head"><div class="orb moon" aria-hidden="true"></div><div><h3>Moon letters · Qamariyyah</h3><p class="muted">The Laam is <b>read</b> clearly.</p></div></div>
+            <div class="letters-sm"><span>ا</span><span>ب</span><span>غ</span><span>ح</span><span>ج</span><span>ك</span><span>و</span><span>خ</span><span>ف</span><span>ع</span><span>ق</span><span>ي</span><span>م</span><span>ه</span></div>
+            <p class="muted">Remember: <span class="ar-inline" style="font-size:26px;color:var(--blue)">اِبْغِ حَجَّكَ وَخَفْ عَقِيْمَهٗ</span></p>
+            <div class="break" style="margin-top:8px"><span>اَ</span><span class="lam-on">لْ</span><span>قَ</span><span>مَ</span><span>رُ</span><span class="eqs">←</span><span class="word">اَلْقَمَرُ</span></div>
+            <p style="margin-top:4px"><b>al-qamaru</b> · also <span class="ar-inline" style="font-size:26px;color:var(--blue)">اَلْحَمْدُ</span> <b>al-ḥamdu</b></p>
+          </div>
+          <div class="card sun-card pop" style="--i:3">
+            <div class="sm-head"><div class="orb sun" aria-hidden="true"></div><div><h3>Sun letters · Shamsiyyah</h3><p class="muted">The Laam is <b>silent</b>. The next letter gets a Shaddah.</p></div></div>
+            <div class="letters-sm"><span>ت</span><span>ث</span><span>د</span><span>ذ</span><span>ر</span><span>ز</span><span>س</span><span>ش</span><span>ص</span><span>ض</span><span>ط</span><span>ظ</span><span>ل</span><span>ن</span></div>
+            <p class="muted">Like the sun hides the moon, these letters hide the Laam.</p>
+            <div class="break" style="margin-top:8px"><span>اَ</span><span class="lam-off">ل</span><span>شَّ</span><span>مْ</span><span>سُ</span><span class="eqs">←</span><span class="word">اَلشَّمْسُ</span></div>
+            <p style="margin-top:4px"><b>ash-shamsu</b> · also <span class="ar-inline" style="font-size:26px;color:var(--blue)">اَلنَّاسُ</span> <b>an-naasu</b></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 16 NOON OVERVIEW -->
+    <section class="slide" data-id="noon" data-lesson="Step 12 · Noon sakin & Tanween">
+      <div class="inner">
+        <span class="eyebrow pop">Step 12 · Noon sakin &amp; Tanween</span>
+        <h2 class="pop" style="--i:1">The next letter decides what <span class="ar-inline">نْ</span> does</h2>
+        <p class="lead pop" style="--i:2">When you see <b>Noon with Jazm</b> or any <b>Tanween</b>, look at the letter that comes after it. There are 4 rules.</p>
+        <div class="nr">
+          <div class="card c-izhar pop" style="--i:3"><h3>Izhar<small>Say it clearly</small></h3><div class="count">6 throat letters</div><div class="ltrs">ء ه ع ح غ خ</div></div>
+          <div class="card c-idgham pop" style="--i:4"><h3>Idgham<small>Merge it in</small></h3><div class="count">6 letters</div><div class="ltrs">ي ر م ل و ن</div></div>
+          <div class="card c-iqlab pop" style="--i:5"><h3>Iqlab<small>Change it to Meem</small></h3><div class="count">1 letter</div><div class="ltrs">ب</div></div>
+          <div class="card c-ikhfa pop" style="--i:6"><h3>Ikhfa<small>Hide it with a hum</small></h3><div class="count">15 letters</div><div class="ltrs">ت ث ج د ذ ز س ش ص ض ط ظ ف ق ك</div></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 17 IZHAR -->
+    <section class="slide" data-id="izhar" data-lesson="Step 12 · Izhar">
+      <div class="inner">
+        <span class="eyebrow pop">Step 12 · Rule 1</span>
+        <h2 class="pop" style="--i:1">Izhar: say the Noon clearly</h2>
+        <div class="rule-layout">
+          <div class="card stage c-izhar pop" style="--i:2;border-top:10px solid var(--lime)">
+            <div class="anim a-izhar"><span class="n">نْ</span><span class="nx">ح</span></div>
+            <p><b>No hum, no hiding.</b> Say "n" clearly, then the throat letter.</p>
+            <div class="big-ltrs"><span>ء</span><span>ه</span><span>ع</span><span>ح</span><span>غ</span><span>خ</span></div>
+          </div>
+          <div class="card pop" style="--i:3">
+            <div class="ex"><span class="ar">اَنْعَمْتَ</span><span class="tr">an'amta</span><span class="src">Al-Fatihah</span></div>
+            <div class="ex"><span class="ar">مِنْ خَوْفٍ</span><span class="tr">min khawf</span><span class="src">Quraysh</span></div>
+            <div class="ex"><span class="ar">عَذَابٌ اَلِيْمٌ</span><span class="tr">'adhaabun aleem</span><span class="src">Al-Baqarah</span></div>
+            <p class="muted" style="margin-top:8px">The throat letters are far from the nose, so the Noon stays clear.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 18 IDGHAM -->
+    <section class="slide" data-id="idgham" data-lesson="Step 12 · Idgham">
+      <div class="inner">
+        <span class="eyebrow pop">Step 12 · Rule 2</span>
+        <h2 class="pop" style="--i:1">Idgham: the Noon merges in</h2>
+        <div class="rule-layout">
+          <div class="card stage pop" style="--i:2;border-top:10px solid var(--blue-2)">
+            <div class="anim a-idgham"><span class="n">نْ</span><span class="nx">يَ</span></div>
+            <p>The Noon disappears into the next letter. Remember the 6 letters with <span class="ar-inline" style="font-size:28px;color:var(--blue)">يَرْمَلُوْنَ</span></p>
+            <div class="note" style="width:100%"><b>With hum (2 beats):</b> <span class="ar-inline">ي ن م و</span><br><b>Without hum:</b> <span class="ar-inline">ل ر</span></div>
+          </div>
+          <div class="card pop" style="--i:3">
+            <div class="ex"><span class="ar">مَنْ يَّقُوْلُ</span><span class="tr">may-yaqool</span><span class="pill blue">hum</span></div>
+            <div class="ex"><span class="ar">خَيْرًا يَّرَهٗ</span><span class="tr">khairay-yarah</span><span class="pill blue">hum</span></div>
+            <div class="ex"><span class="ar">مِنْ وَّالٍ</span><span class="tr">miw-waal</span><span class="pill blue">hum</span></div>
+            <div class="ex"><span class="ar">مِنْ رَّبِّهِمْ</span><span class="tr">mir-rabbihim</span><span class="pill light">no hum</span></div>
+            <div class="ex"><span class="ar">وَلَمْ يَكُنْ لَّهٗ</span><span class="tr">wa lam yakul-lahu</span><span class="pill light">no hum</span></div>
+            <p class="note" style="margin-top:10px">Only between <b>two words</b>. Inside one word the Noon stays clear: <span class="ar-inline">دُنْيَا</span> <span class="ar-inline">بُنْيَانٌ</span> <span class="ar-inline">قِنْوَانٌ</span> <span class="ar-inline">صِنْوَانٌ</span></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 19 IQLAB -->
+    <section class="slide" data-id="iqlab" data-lesson="Step 12 · Iqlab">
+      <div class="inner">
+        <span class="eyebrow pop">Step 12 · Rule 3</span>
+        <h2 class="pop" style="--i:1">Iqlab: the Noon turns into Meem</h2>
+        <div class="rule-layout">
+          <div class="card stage pop" style="--i:2;border-top:10px solid var(--coral)">
+            <div class="anim a-iqlab"><span class="n">نْ</span><span class="m">مْ</span><span class="nx">بَ</span></div>
+            <p>Before <b>ب</b> only. Say a soft "m" with a hum for 2 beats, lips gently closed.</p>
+            <p class="note" style="width:100%">Look for the <b>small Meem</b> printed above the Noon sakin (or in place of the Tanween): <span class="ar-inline iq" style="font-size:40px;color:var(--coral)">نۢ</span>. It tells you: say Meem here, not Noon.</p>
+          </div>
+          <div class="card pop" style="--i:3">
+            <div class="ex"><span class="ar iq">مِنۢ بَعْدِ</span><span class="tr">mim-ba'di</span><span class="src">Al-Baqarah</span></div>
+            <div class="ex"><span class="ar iq">سَمِيْعُۢ بَصِيْرٌ</span><span class="tr">samee'um-baseer</span><span class="src">Luqman</span></div>
+            <div class="ex"><span class="ar iq">لَيُنۢبَذَنَّ</span><span class="tr">la-yumbadhanna</span><span class="src">Al-Humazah</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 20 IKHFA -->
+    <section class="slide" data-id="ikhfa" data-lesson="Step 12 · Ikhfa">
+      <div class="inner">
+        <span class="eyebrow pop">Step 12 · Rule 4</span>
+        <h2 class="pop" style="--i:1">Ikhfa: hide the Noon with a hum</h2>
+        <div class="rule-layout">
+          <div class="card stage pop" style="--i:2;border-top:10px solid var(--yellow)">
+            <div class="anim a-ikhfa"><span class="n">نْ</span><span class="nx">شَ</span></div>
+            <div class="hum">nnnng (2 beats)</div>
+            <p>The tongue does not fully touch for "n". The sound hides in your nose, between clear and merged.</p>
+            <div class="big-ltrs" style="justify-content:center"><span>ت</span><span>ث</span><span>ج</span><span>د</span><span>ذ</span><span>ز</span><span>س</span><span>ش</span><span>ص</span><span>ض</span><span>ط</span><span>ظ</span><span>ف</span><span>ق</span><span>ك</span></div>
+          </div>
+          <div class="card pop" style="--i:3">
+            <div class="ex"><span class="ar">مِنْ شَرِّ</span><span class="tr">mi(n)n-sharri</span><span class="src">Al-Falaq</span></div>
+            <div class="ex"><span class="ar">اَنْزَلْنٰهُ</span><span class="tr">a(n)nzalnaahu</span><span class="src">Al-Qadr</span></div>
+            <div class="ex"><span class="ar">مِنْ كُلِّ اَمْرٍ</span><span class="tr">mi(n)n-kulli amr</span><span class="src">Al-Qadr</span></div>
+            <p class="muted" style="margin-top:8px">Ikhfa is the biggest group: every letter that is not in Izhar, Idgham or Iqlab.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · MADDAT -->
+    <section class="slide" data-id="maddat" data-lesson="Step 13 · Maddat">
+      <div class="inner">
+        <span class="eyebrow pop">Step 13 · Maddat</span>
+        <h2 class="pop" style="--i:1">How long do we stretch?</h2>
+        <p class="lead pop" style="--i:2">A wavy line <span class="ar-inline" style="font-size:30px;color:var(--yellow)">ـٓ</span> over a stretchy letter means: stretch <b>longer</b>. Count the beats on your fingers.</p>
+        <div class="madd-grid">
+          <div class="card madd pop" style="--i:3;--c:var(--lime)"><h3>Natural Madd<small>Madd Asli</small></h3><div class="beats"><i style="--i:0"></i><i style="--i:1"></i></div><div class="count">2 beats</div><p>A stretchy letter with nothing after it.</p><div class="big-ar sm">قَالَ</div></div>
+          <div class="card madd pop" style="--i:4;--c:var(--blue-2)"><h3>Joined Madd<small>Madd Muttasil</small></h3><div class="beats"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i class="opt-beat" style="--i:4"></i></div><div class="count">4 or 5 beats</div><p>Hamza comes after it <b>in the same word</b>.</p><div class="big-ar sm">جَآءَ</div></div>
+          <div class="card madd pop" style="--i:5;--c:var(--yellow)"><h3>Separated Madd<small>Madd Munfasil</small></h3><div class="beats"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i class="opt-beat" style="--i:4"></i></div><div class="count">4 or 5 beats</div><p>The word ends with it and the <b>next word</b> starts with Hamza.</p><div class="big-ar sm">اِنَّآ اَنْزَلْنٰهُ</div></div>
+          <div class="card madd pop" style="--i:6;--c:var(--coral)"><h3>Necessary Madd<small>Madd Lazim</small></h3><div class="beats"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i></div><div class="count">6 beats</div><p>A Shaddah or Jazm comes after it in the same word.</p><div class="big-ar sm">الضَّآلِّيْنَ</div></div>
+          <div class="card madd pop" style="--i:7;--c:#b28cff"><h3>Stopping Madd<small>Madd 'Arid</small></h3><div class="beats"><i style="--i:0"></i><i style="--i:1"></i><i class="opt-beat" style="--i:2"></i><i class="opt-beat" style="--i:3"></i><i class="opt-beat" style="--i:4"></i><i class="opt-beat" style="--i:5"></i></div><div class="count">2, 4 or 6 beats</div><p>You <b>stop</b> on the letter right after a stretchy letter.</p><div class="big-ar sm">نَسْتَعِيْنْ</div></div>
+        </div>
+        <p class="lead pop" style="--i:8">Use the same length every time in one recitation. Your teacher will show you which one to use.</p>
+      </div>
+    </section>
+
+    <!-- NEW · MUQATTA'AT -->
+    <section class="slide" data-id="muqattaat" data-lesson="Step 14 · Huroof-e-Muqatta'at">
+      <div class="inner">
+        <span class="eyebrow pop">Step 14 · Huroof-e-Muqatta'at</span>
+        <h2 class="pop" style="--i:1">Letters read one by one</h2>
+        <p class="lead pop" style="--i:2">Some surahs begin with letters that are read <b>by their names</b>, one at a time. Only Allah knows their full meaning.</p>
+        <div class="muq">
+          <div class="card pop" style="--i:3"><div class="big-ar">الٓمّٓ</div><b>Alif · Laaam · Meeem</b><span class="src">Al-Baqarah</span></div>
+          <div class="card pop" style="--i:4"><div class="big-ar">يٰسٓ</div><b>Yaa · Seeen</b><span class="src">Ya-Sin</span></div>
+          <div class="card pop" style="--i:5"><div class="big-ar">طٰهٰ</div><b>Ṭaa · Haa</b><span class="src">Ta-Ha</span></div>
+          <div class="card pop" style="--i:6"><div class="big-ar">حٰمٓ</div><b>Ḥaa · Meeem</b><span class="src">Ghafir</span></div>
+          <div class="card pop" style="--i:7"><div class="big-ar">قٓ</div><b>Qaaaf</b><span class="src">Qaf</span></div>
+          <div class="card pop" style="--i:8"><div class="big-ar">كٓهٰيٰعٓصٓ</div><b>Kaaaf · Haa · Yaa · 'Ayn · Ṣaaad</b><span class="src">Maryam</span></div>
+        </div>
+        <div class="grid g2">
+          <div class="card pop" style="--i:9"><h3>Long names · 6 beats</h3><p class="muted">Letters whose names have 3 letters, with a stretchy letter in the middle.</p><div class="letters-row"><span>ن</span><span>ق</span><span>ص</span><span>ع</span><span>س</span><span>ل</span><span>ك</span><span>م</span></div><p class="muted">'Ain may be 4 or 6 beats.</p></div>
+          <div class="card pop" style="--i:10"><h3>Short names · 2 beats</h3><p class="muted">Letters whose names have 2 letters.</p><div class="letters-row"><span>ح</span><span>ي</span><span>ط</span><span>ه</span><span>ر</span></div><p class="muted">Alif is not stretched at all.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · HAMZAT-UL-WASL -->
+    <section class="slide" data-id="wasl" data-lesson="Step 15 · Hamzat-ul-Wasl">
+      <div class="inner">
+        <span class="eyebrow pop">Step 15 · Hamzat-ul-Wasl</span>
+        <h2 class="pop" style="--i:1">The Alif that hides when words join</h2>
+        <p class="lead pop" style="--i:2">Some words start with an Alif that has <b>no mark</b>. Read it only when you <b>start</b> with that word. When you join it to the word before, <b>skip it</b>.</p>
+        <div class="grid g2">
+          <div class="card pop" style="--i:3">
+            <h3>Joining: skip the Alif</h3>
+            <div class="break" style="margin:8px 0"><span>رَبِّ</span><span class="lam-off">ا</span><span>لْعٰلَمِيْنَ</span></div>
+            <p class="tr-line">rab-bil-'aa-la-meen</p>
+            <div class="break" style="margin:8px 0"><span>بِسْمِ</span><span class="lam-off">ا</span><span>للّٰهِ</span></div>
+            <p class="tr-line">bis-mil-laah</p>
+            <p class="muted">A stretchy letter before it is not stretched: <span class="ar-inline" style="font-size:26px;color:var(--blue)">فِي الْاَرْضِ</span> is read <b>fil-arḍ</b>.</p>
+          </div>
+          <div class="card pop" style="--i:4">
+            <h3>Starting: which sound?</h3>
+            <div class="ex"><span class="ar">اَلْحَمْدُ</span><span class="tr">al-ḥamdu</span><span class="pill light">with اَلْ: Fatha</span></div>
+            <div class="ex"><span class="ar">اُنْظُرْ</span><span class="tr">unẓur</span><span class="pill blue">3rd letter has Damma: Damma</span></div>
+            <div class="ex"><span class="ar">اِهْدِنَا</span><span class="tr">ihdinaa</span><span class="pill heavy">otherwise: Kasra</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · NOON QUTNI -->
+    <section class="slide" data-id="qutni" data-lesson="Step 16 · Noon Qutni">
+      <div class="inner">
+        <span class="eyebrow pop">Step 16 · Noon Qutni</span>
+        <h2 class="pop" style="--i:1">A little Noon that builds a bridge</h2>
+        <p class="lead pop" style="--i:2">When <b>Tanween</b> meets a word starting with a hidden Alif (Hamzat-ul-Wasl), add a small <b>Noon with Kasra</b> to join them. Many Mushafs print a tiny <span class="ar-inline" style="font-size:26px;color:var(--lime)">ن</span> there.</p>
+        <div class="card pop" style="--i:3">
+          <div class="eq"><span class="chip" style="--i:0">لُمَزَةِ</span><span class="op" style="--i:1">+</span><span class="chip bridge" style="--i:2">نِ</span><span class="op" style="--i:3">+</span><span class="chip" style="--i:4">الَّذِيْ</span></div>
+          <div class="eq-say">lu-ma-za-ti-nil-la-dhee</div>
+        </div>
+        <div class="card pop" style="--i:4">
+          <div class="ex"><span class="ar">لُّمَزَةِ <span class="qn">نِ</span> الَّذِيْ</span><span class="tr">lumazatinil-ladhee</span><span class="src">Al-Humazah</span></div>
+          <div class="ex"><span class="ar">نُوْحُ <span class="qn">نِ</span> ابْنَهٗ</span><span class="tr">nooḥu-nibnahoo</span><span class="src">Hud</span></div>
+          <div class="ex"><span class="ar">خَيْرَا <span class="qn">نِ</span> الْوَصِيَّةُ</span><span class="tr">khayra-nil-waṣiyyatu</span><span class="src">Al-Baqarah</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · IDGHAM TAAM AND NAQIS -->
+    <section class="slide" data-id="idgham-taam" data-lesson="Step 17 · Idgham Taam & Naqis">
+      <div class="inner">
+        <span class="eyebrow pop">Step 17 · Idgham Taam &amp; Naqis</span>
+        <h2 class="pop" style="--i:1">Full merge or half merge?</h2>
+        <div class="grid g2">
+          <div class="card rule-card pop" style="--i:2;border-top:10px solid var(--blue-2)">
+            <span class="pill blue badge">Idgham Taam · complete</span>
+            <p>The first letter <b>disappears completely</b>. Nothing of it is left.</p>
+            <div class="ex"><span class="ar">مِنْ رَّبِّهِمْ</span><span class="tr">mir-rabbihim</span></div>
+            <div class="ex"><span class="ar">قَدْ تَّبَيَّنَ</span><span class="tr">qat-tabayyana</span><span class="src">Al-Baqarah</span></div>
+            <div class="ex"><span class="ar">اِذْ ظَّلَمُوْا</span><span class="tr">iẓ-ẓalamoo</span><span class="src">An-Nisa</span></div>
+            <div class="ex"><span class="ar">قُلْ رَّبِّ</span><span class="tr">qur-rabbi</span></div>
+          </div>
+          <div class="card rule-card pop" style="--i:3;border-top:10px solid var(--yellow)">
+            <span class="pill heavy badge">Idgham Naqis · incomplete</span>
+            <p>The first letter merges, but <b>a trace of it stays</b>.</p>
+            <div class="ex"><span class="ar">مَنْ يَّقُوْلُ</span><span class="tr">may-yaqoolu</span><span class="pill light">hum of Noon stays</span></div>
+            <div class="ex"><span class="ar">مِنْ وَّالٍ</span><span class="tr">miw-waal</span><span class="pill light">hum of Noon stays</span></div>
+            <div class="ex"><span class="ar">اَحَطْتُّ</span><span class="tr">aḥaṭtu</span><span class="pill light">heaviness of ط stays</span></div>
+            <div class="ex"><span class="ar">بَسَطْتَّ</span><span class="tr">basaṭta</span><span class="pill light">heaviness of ط stays</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · SEEN AND SAAD WORDS -->
+    <section class="slide" data-id="seen-saad" data-lesson="Step 18 · Seen & Saad words">
+      <div class="inner">
+        <span class="eyebrow pop">Step 18 · Seen &amp; Saad words</span>
+        <h2 class="pop" style="--i:1">Written with <span class="ar-inline">ص</span>, sometimes read with <span class="ar-inline">س</span></h2>
+        <p class="lead pop" style="--i:2">In a few words a small <b>س</b> is printed on the <b>ص</b>. Here is how to read each one.</p>
+        <div class="ss-grid">
+          <div class="card pop" style="--i:3"><div class="big-ar sm">يَبْصُطُ</div><span class="pill heavy">Read with س</span><p class="tr-line">yabsuṭu</p><span class="src">Al-Baqarah</span></div>
+          <div class="card pop" style="--i:4"><div class="big-ar sm">بَصْطَةً</div><span class="pill heavy">Read with س</span><p class="tr-line">basṭatan</p><span class="src">Al-A'raf</span></div>
+          <div class="card pop" style="--i:5"><div class="big-ar sm">اَلْمُصَيْطِرُوْنَ</div><span class="pill blue">ص or س</span><p class="tr-line">al-muṣayṭiroon</p><span class="src">At-Tur</span></div>
+          <div class="card pop" style="--i:6"><div class="big-ar sm">بِمُصَيْطِرٍ</div><span class="pill light">Read with ص only</span><p class="tr-line">bi-muṣayṭir</p><span class="src">Al-Ghashiyah</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · IMALA -->
+    <section class="slide" data-id="imala" data-lesson="Step 19 · Imala">
+      <div class="inner">
+        <span class="eyebrow pop">Step 19 · Imala of Raa</span>
+        <h2 class="pop" style="--i:1">Imala: the Raa leans toward "e"</h2>
+        <p class="lead pop" style="--i:2">There is only <b>one place</b> in the Quran (Hafs reading) with Imala. In the Mushaf the Raa has a <b>Khari Zer</b> under it. Do not read it as a long "ee": bend the sound toward Kasra, like the "e" in <b>"re"</b> (maj-<b>rē</b>-haa), and stretch it for <b>2 beats</b>. The Raa is read <b>light</b>.</p>
+        <div class="card pop" style="--i:3;text-align:center">
+          <div class="big-ar">بِسْمِ اللّٰهِ مَجْرٖىهَا</div>
+          <div class="sound-pill">bismil-laahi maj-<span class="hl">rē</span>-haa</div>
+          <p class="muted">Surah Hud, ayah 41. Look for the Khari Zer under the Raa. Read "maj-rē-haa", not "maj-ree-haa".</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · ISHMAM -->
+    <section class="slide" data-id="ishmam" data-lesson="Step 20 · Ishmam">
+      <div class="inner">
+        <span class="eyebrow pop">Step 20 · Ishmam</span>
+        <h2 class="pop" style="--i:1">Ishmam: round your lips, make no sound</h2>
+        <p class="lead pop" style="--i:2">Only <b>one word</b>, in Surah Yusuf. It was once two Noons. While saying the merged Noon, <b>round your lips</b> as if saying Pesh, but make <b>no Pesh sound</b>.</p>
+        <div class="rule-layout">
+          <div class="card stage pop" style="--i:3"><div class="lips" aria-hidden="true"></div><p><b>Lips round silently</b> on the Noon with Shaddah.</p></div>
+          <div class="card pop" style="--i:4;text-align:center"><div class="big-ar">مَا لَكَ لَا تَاْمَنَّا</div><div class="sound-pill">maa laka laa ta'-man-naa</div><p class="muted">Surah Yusuf, ayah 11</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · SAKTA -->
+    <section class="slide" data-id="sakta" data-lesson="Step 21 · Sakta">
+      <div class="inner">
+        <span class="eyebrow pop">Step 21 · Sakta</span>
+        <h2 class="pop" style="--i:1">Sakta: a tiny pause, no new breath</h2>
+        <p class="lead pop" style="--i:2">Stop the sound for a moment (about 2 beats) <b>without taking a breath</b>, then carry on. In the Hafs reading this happens in <b>4 places</b>.</p>
+        <div class="card pop" style="--i:3">
+          <div class="ex"><span class="sk"><span class="ar">عِوَجًا</span><span class="pause">pause</span><span class="ar">قَيِّمًا</span></span><span class="tr">'iwajaa · qayyiman</span><span class="src">Al-Kahf</span></div>
+          <div class="ex"><span class="sk"><span class="ar">مِنْ مَّرْقَدِنَا</span><span class="pause">pause</span><span class="ar">هٰذَا</span></span><span class="tr">mim-marqadinaa · haadhaa</span><span class="src">Ya-Sin</span></div>
+          <div class="ex"><span class="sk"><span class="ar">مَنْ</span><span class="pause">pause</span><span class="ar">رَاقٍ</span></span><span class="tr">man · raaq</span><span class="src">Al-Qiyamah</span></div>
+          <div class="ex"><span class="sk"><span class="ar">بَلْ</span><span class="pause">pause</span><span class="ar">رَانَ</span></span><span class="tr">bal · raana</span><span class="src">Al-Mutaffifin</span></div>
+        </div>
+        <p class="lead pop" style="--i:4">Because of the pause, <b>مَنْ رَاقٍ</b> and <b>بَلْ رَانَ</b> are not merged.</p>
+      </div>
+    </section>
+
+    <!-- NEW · TASHEEL -->
+    <section class="slide" data-id="tasheel" data-lesson="Step 22 · Tasheel">
+      <div class="inner">
+        <span class="eyebrow pop">Step 22 · Tasheel</span>
+        <h2 class="pop" style="--i:1">Tasheel: a soft second Hamza</h2>
+        <p class="lead pop" style="--i:2">Only <b>one word</b>, in Surah Fussilat. It starts with two Hamzas. Say the first one clearly, and the second one <b>softly, between Hamza and 'Ayn</b>.</p>
+        <div class="card pop" style="--i:3;text-align:center">
+          <div class="big-ar">ءَاَعْجَمِيٌّ وَّعَرَبِيٌّ</div>
+          <div class="sound-pill">a-<span class="hl">a</span>'jamiyyuw-wa-'arabiyy</div>
+          <p class="muted">Surah Fussilat, ayah 44. Read the second (middle) Hamza softly.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · IBDAL -->
+    <section class="slide" data-id="ibdal" data-lesson="Step 23 · Ibdal">
+      <div class="inner">
+        <span class="eyebrow pop">Step 23 · Ibdal</span>
+        <h2 class="pop" style="--i:1">Ibdal: Hamza changes into a long Alif</h2>
+        <p class="lead pop" style="--i:2">When <b>two Hamzas come together</b>, we join their signs and change the second one into a <b>Madd</b> (a <b>Khari Zabar</b>, standing Zabar). It is stretched like <b>Madd Lazim</b>, for <b>6 beats</b>. (Tasheel is also allowed here, but Ibdal is the usual way.)</p>
+        <div class="cmp pop" style="--i:3">
+          <div class="cmp-head"></div>
+          <div class="cmp-head h-ib"><b>Ibdal</b><small>the usual way · long Alif, 6 beats</small></div>
+          <div class="cmp-head h-ts"><b>Tasheel</b><small>also allowed · soft second Hamza, no stretch</small></div>
+
+          <div class="cmp-src">Al-An'am<br><small>2 times</small></div>
+          <div class="cmp-cell c-ib"><span class="ar">آلذَّكَرَيْنِ</span><span class="tr">aaa-dh-dhakarayni</span></div>
+          <div class="cmp-cell c-ts"><span class="ar">ءَاَلذَّكَرَيْنِ</span><span class="tr">a-a-dh-dhakarayni</span></div>
+
+          <div class="cmp-src">Yunus · An-Naml</div>
+          <div class="cmp-cell c-ib"><span class="ar">آللّٰهُ</span><span class="tr">aaal-laahu</span></div>
+          <div class="cmp-cell c-ts"><span class="ar">ءَاَللّٰهُ</span><span class="tr">a-al-laahu</span></div>
+
+          <div class="cmp-src">Yunus<br><small>2 times</small></div>
+          <div class="cmp-cell c-ib"><span class="ar">آلْئٰنَ</span><span class="tr">aaal-aana</span></div>
+          <div class="cmp-cell c-ts"><span class="ar">ءَاَلْئٰنَ</span><span class="tr">a-al-aana</span></div>
+        </div>
+        <div class="card pop" style="--i:4">
+          <p class="muted" style="margin:0">In Ibdal, "aaa" = one long Alif, stretched for 6 beats:</p>
+          <div class="beats"><i style="--i:0"></i><i style="--i:1"></i><i style="--i:2"></i><i style="--i:3"></i><i style="--i:4"></i><i style="--i:5"></i></div>
+          <p class="muted" style="margin:0">Choose one way and use it every time in the same recitation.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · SILENT ALIF -->
+    <section class="slide" data-id="silent-alif" data-lesson="Step 24 · Silent Alif">
+      <div class="inner">
+        <span class="eyebrow pop">Step 24 · Silent Alif</span>
+        <h2 class="pop" style="--i:1">Alifs we see but do not read</h2>
+        <p class="lead pop" style="--i:2">Some Alifs are written but <b>not read</b>. In many Mushafs they have a small <b>circle (o)</b> on them, or no mark at all.</p>
+        <div class="grid g2">
+          <div class="card rule-card pop" style="--i:3;border-top:10px solid var(--coral)">
+            <span class="pill badge" style="background:var(--coral);color:var(--ink)">Never read</span>
+            <div class="ex"><span class="ar">قَالُوْا</span><span class="tr">qaaloo</span><span class="muted">Alif after the Waaw of "they"</span></div>
+            <div class="ex"><span class="ar">اٰمَنُوْا</span><span class="tr">aamanoo</span></div>
+            <div class="ex"><span class="ar">مِائَةَ</span><span class="tr">mi'ata</span></div>
+            <div class="ex"><span class="ar">اُولٰٓئِكَ</span><span class="tr">ulaaa'ika</span><span class="muted">the Waaw is silent too</span></div>
+          </div>
+          <div class="card rule-card pop" style="--i:4;border-top:10px solid var(--lime)">
+            <span class="pill light badge">Read only when you stop</span>
+            <div class="ex"><span class="ar">اَنَا</span><span class="tr">ana · stop: anaa</span></div>
+            <div class="ex"><span class="ar">لٰكِنَّا</span><span class="tr">laakinna · stop: laakinnaa</span><span class="src">Al-Kahf</span></div>
+            <div class="ex"><span class="ar">الظُّنُوْنَا</span><span class="tr">aẓ-ẓunoonaa (at stop)</span><span class="src">Al-Ahzab</span></div>
+            <div class="ex"><span class="ar">السَّبِيْلَا</span><span class="tr">as-sabeelaa (at stop)</span><span class="src">Al-Ahzab</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · WAQF: WHY AND HOW -->
+    <section class="slide" data-id="waqf" data-lesson="Step 25 · Waqf (stopping)">
+      <div class="inner">
+        <span class="eyebrow pop">Step 25 · Waqf</span>
+        <h2 class="pop" style="--i:1">Why the right stop matters</h2>
+        <p class="lead pop" style="--i:2">Waqf means <b>stopping</b> at the end of a word to take a breath. A stop in the right place keeps the <b>meaning</b> correct. A stop in the wrong place can change it.</p>
+        <div class="grid g2">
+          <div class="card rule-card pop" style="--i:3;border-top:10px solid var(--coral)">
+            <span class="pill badge" style="background:var(--coral);color:var(--ink)">Wrong stop</span>
+            <div class="big-ar sm">فَوَيْلٌ لِّلْمُصَلِّيْنَ</div>
+            <p class="tr-line" style="text-align:center">fa-waylul-lil-muṣalleen</p>
+            <p class="muted">Stopping here alone sounds like "So woe to those who pray", which is not the full meaning.</p>
+          </div>
+          <div class="card rule-card pop" style="--i:4;border-top:10px solid var(--lime)">
+            <span class="pill light badge">Right way</span>
+            <div class="big-ar sm">الَّذِيْنَ هُمْ عَنْ صَلَاتِهِمْ سَاهُوْنَ</div>
+            <p class="tr-line" style="text-align:center">alladheena hum 'an ṣalaatihim saahoon</p>
+            <p class="muted">Read on to the next ayah: "...those who are careless about their prayer." (Al-Ma'un)</p>
+          </div>
+        </div>
+        <div class="card pop" style="--i:5">
+          <h3>3 golden rules</h3>
+          <ol class="gold">
+            <li>Stop only at the <b>end of a word</b>, never in the middle of a word.</li>
+            <li>Take your breath <b>only when you stop</b>, not while still reading.</li>
+            <li>If you had to stop in a wrong place, <b>go back</b> a few words and start again from a good place.</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · WAQF: HOW TO STOP ON THE LAST LETTER -->
+    <section class="slide" data-id="waqf-endings" data-lesson="Step 25 · Waqf (stopping)">
+      <div class="inner">
+        <span class="eyebrow pop">Step 25 · Waqf</span>
+        <h2 class="pop" style="--i:1">How to stop on the last letter</h2>
+        <p class="lead pop" style="--i:2">When you stop, the <b>last letter changes</b>. Look at its mark and follow the rule. The word on the right is how it is written, the word on the left is how you stop.</p>
+        <div class="wq">
+          <div class="card pop" style="--i:3"><h3>Zabar, Zer or Pesh → Jazm</h3><div class="stopx"><span class="from">نَسْتَعِيْنُ</span><span class="arr">←</span><span class="to">نَسْتَعِيْنْ</span></div><div class="stopx"><span class="from">الْحِسَابِ</span><span class="arr">←</span><span class="to">الْحِسَابْ</span></div></div>
+          <div class="card pop" style="--i:4"><h3>Do zer or Do pesh → Jazm</h3><div class="stopx"><span class="from">اَحَدٌ</span><span class="arr">←</span><span class="to">اَحَدْ</span></div><div class="stopx"><span class="from">مَسَدٍ</span><span class="arr">←</span><span class="to">مَسَدْ</span></div></div>
+          <div class="card pop" style="--i:5"><h3>Do zabar → one Zabar + Alif</h3><div class="stopx"><span class="from">تَوَّابًا</span><span class="arr">←</span><span class="to">تَوَّابَا</span></div><div class="stopx"><span class="from">طُوًى</span><span class="arr">←</span><span class="to">طُوَا</span></div></div>
+          <div class="card pop" style="--i:6"><h3>Ends with Alif or a standing mark → no change</h3><div class="stopx"><span class="from">يَغْشٰىهَا</span><span class="arr">←</span><span class="to">يَغْشٰىهَا</span></div><div class="stopx"><span class="from">وَالضُّحٰى</span><span class="arr">←</span><span class="to">وَالضُّحٰى</span></div></div>
+          <div class="card pop" style="--i:7"><h3>Round Taa <span class="ar-inline">ة</span> or <span class="ar-inline">ه</span> → Haa with Jazm</h3><div class="stopx"><span class="from">الْحُطَمَةُ</span><span class="arr">←</span><span class="to">الْحُطَمَهْ</span></div><div class="stopx"><span class="from">يَرَهٗ</span><span class="arr">←</span><span class="to">يَرَهْ</span></div><p class="muted">But <span class="ar-inline" style="font-size:24px">طٰهٰ</span> keeps its standing Zabar.</p></div>
+          <div class="card pop" style="--i:8"><h3>Shaddah at the end → hold it</h3><div class="stopx"><span class="from">وَتَبَّ</span><span class="arr">←</span><span class="to">وَتَبّْ</span></div><p class="muted">Press the doubled letter a little longer, then stop: "wa tabb".</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NEW · WAQF SIGNS -->
+    <section class="slide" data-id="waqf-signs" data-lesson="Step 26 · Waqf signs">
+      <div class="inner">
+        <span class="eyebrow pop">Step 26 · Rumooz-e-Auqaf</span>
+        <h2 class="pop" style="--i:1">Stop signs in the Mushaf</h2>
+        <p class="lead pop" style="--i:2">Small signs above the words tell you where to <b style="color:var(--coral)">stop</b>, where to <b>continue</b>, and where <b style="color:var(--yellow)">either</b> is fine. When you stop, use the rules from the last slide.</p>
+        <div class="legend-row pop" style="--i:3"><span class="pill" style="background:var(--coral);color:var(--ink)">Stop</span><span class="pill heavy">Better to stop</span><span class="pill blue">Better to continue</span><span class="pill light">Continue</span><span class="pill" style="background:#b28cff;color:var(--ink)">Pause, no breath</span></div>
+        <div class="signs">
+          <div class="sign s-stop pop" style="--i:4"><div class="sg"><span class="ring"></span></div><b>Circle</b><small>End of an ayah. Stopping here is best.</small></div>
+          <div class="sign s-stop pop" style="--i:4.5"><div class="sg">م</div><b>Waqf Lazim</b><small>Must stop. Joining can change the meaning.</small></div>
+          <div class="sign s-stop pop" style="--i:5"><div class="sg">ط</div><b>Waqf Mutlaq</b><small>Stop.</small></div>
+          <div class="sign s-stop pop" style="--i:5.5"><div class="sg">قف</div><b>Qif</b><small>Stop.</small></div>
+          <div class="sign s-better pop" style="--i:6"><div class="sg">ج</div><b>Waqf Jaiz</b><small>Stop or continue. Stopping is better.</small></div>
+          <div class="sign s-better pop" style="--i:6.5"><div class="sg">قلى</div><b>Qala</b><small>Stopping is better.</small></div>
+          <div class="sign s-cont pop" style="--i:7"><div class="sg">ز</div><b>Waqf Mujawwaz</b><small>Continuing is better.</small></div>
+          <div class="sign s-cont pop" style="--i:7.5"><div class="sg">ص</div><b>Waqf Murakhkhas</b><small>Continue. Stop only if out of breath.</small></div>
+          <div class="sign s-cont pop" style="--i:8"><div class="sg">صلى</div><b>Sala</b><small>Continuing is better.</small></div>
+          <div class="sign s-cont pop" style="--i:8.5"><div class="sg">ق</div><b>Qeela</b><small>Some scholars stop here. Better to continue.</small></div>
+          <div class="sign s-go pop" style="--i:9"><div class="sg">لا</div><b>La</b><small>Do not stop. On an ayah circle you may stop.</small></div>
+          <div class="sign s-go pop" style="--i:9.5"><div class="sg dots">∴ ∴</div><b>Mu'anaqah</b><small>Stop at one of the two places, not both.</small></div>
+          <div class="sign s-pause pop" style="--i:10"><div class="sg">س</div><b>Sakta</b><small>Short pause without a breath (Step 21).</small></div>
+          <div class="sign s-pause pop" style="--i:10.5"><div class="sg">وقفة</div><b>Waqfah</b><small>A longer pause without a breath.</small></div>
+          <div class="sign s-same pop" style="--i:11"><div class="sg">ك</div><b>Kadhalik</b><small>Same as the sign before it.</small></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 21 QUIZ -->
+    <section class="slide" data-id="quiz" data-lesson="Quiz time">
+      <div class="inner">
+        <span class="eyebrow pop">Quiz time</span>
+        <h2 class="pop" style="--i:1">Can you spot the rule?</h2>
+        <div class="card quiz pop" style="--i:2" id="quiz"></div>
+      </div>
+    </section>
+
+    <!-- 22 FINISH -->
+    <section class="slide" data-id="done" data-lesson="Well done!">
+      <div class="confetti" id="confetti" aria-hidden="true"></div>
+      <div class="inner finish">
+        <div class="trophy pop">مَاشَاءَ اللّٰه</div>
+        <h1 class="pop" style="--i:1">Well done, Little Qari!</h1>
+        <p class="lead pop" style="--i:2">Practice a little every day. Read out loud to your teacher, so they can hear and correct every letter.</p>
+        <p class="lead pop" style="--i:3">The Prophet ﷺ said the one who reads the Quran with difficulty, struggling over it, gets <b>a double reward</b>. So keep going!</p>
+        <button class="btn pop" style="--i:4" data-go="1">Back to the journey</button>
+      </div>
+    </section>
+
+  </main>
+
+  <nav class="controls" aria-label="Slide controls">
+    <button class="nav-btn" id="prev" aria-label="Previous slide">‹</button>
+    <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+    <span class="counter" id="counter">1 / 22</span>
+    <button class="nav-btn next" id="next" aria-label="Next slide">›</button>
+  </nav>
+
+  <div class="menu" id="menu" hidden role="dialog" aria-label="Lessons">
+    <div class="menu-card">
+      <div style="display:flex;justify-content:space-between;align-items:center"><h3>Jump to a lesson</h3><button class="icon-btn" id="menuClose" style="background:var(--ice);color:var(--ink)">Close</button></div>
+      <ol id="menuList"></ol>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  const $ = s => document.querySelector(s);
+  const slides = [...document.querySelectorAll('.slide')];
+  const deck = $('#deck');
+  let cur = 0;
+
+  /* ---------- sky twinkles ---------- */
+  const sky = $('#sky');
+  for (let i=0;i<18;i++){
+    const t=document.createElement('span'); t.className='twinkle';
+    t.style.left=(Math.random()*100)+'%'; t.style.top=(Math.random()*100)+'%';
+    t.style.animationDelay=(Math.random()*3)+'s';
+    const s=2+Math.random()*5; t.style.width=t.style.height=s+'px';
+    sky.appendChild(t);
+  }
+
+  /* ---------- letters data ---------- */
+  const LETTERS = [
+    ['ا','Alif','a','Carries the vowel sound. With a mark it sounds like a soft "a / i / u".'],
+    ['ب','Baa','b','Press both lips together, like "b" in ball.'],
+    ['ت','Taa','t','Tip of the tongue touches behind the top front teeth. A soft "t".'],
+    ['ث','Thaa','th','Tongue peeks out between the teeth, like "th" in think.'],
+    ['ج','Jeem','j','Middle of the tongue touches the roof of the mouth, like "j" in jam.'],
+    ['ح','Ḥaa','ḥ','From the middle of the throat. A breathy "h", like fogging up a mirror.'],
+    ['خ','Khaa','kh','From the top of the throat. A scratchy sound, like a gentle snore.',1],
+    ['د','Daal','d','Tongue tip behind the top teeth, like "d" in door.'],
+    ['ذ','Dhaal','dh','Tongue between the teeth, like "th" in this.'],
+    ['ر','Raa','r','Tongue tip near the gum line, a light rolled "r". Heavy or light: see Step 7.'],
+    ['ز','Zaay','z','A buzzing "z", like a bee.'],
+    ['س','Seen','s','A whistling "s", like a snake.'],
+    ['ش','Sheen','sh','A spreading "sh", like saying hush.'],
+    ['ص','Ṣaad','ṣ','A heavy, deep "s". Fill your mouth.',1],
+    ['ض','Ḍaad','ḍ','Side of the tongue presses on the upper back teeth. A heavy "d". Arabic is called "the language of Ḍaad"!',1],
+    ['ط','Ṭaa','ṭ','A heavy, strong "t". Fill your mouth.',1],
+    ['ظ','Ẓaa','ẓ','Tongue between the teeth, a heavy "th" as in this.',1],
+    ['ع','\'Ain','\'','From the middle of the throat. Squeeze the throat gently. There is no English letter like it.'],
+    ['غ','Ghain','gh','From the top of the throat, like gargling softly.',1],
+    ['ف','Faa','f','Top teeth touch the bottom lip, like "f" in fish.'],
+    ['ق','Qaaf','q','Back of the tongue touches the soft roof. A deep "k".',1],
+    ['ك','Kaaf','k','A little further forward than Qaaf, like "k" in kite.'],
+    ['ل','Laam','l','Tongue tip touches the gum, like "l" in lamp.'],
+    ['م','Meem','m','Lips together, like "m" in moon.'],
+    ['ن','Noon','n','Tongue tip on the gum, with a little hum in the nose.'],
+    ['و','Waaw','w','Round lips, like "w" in water.'],
+    ['ه','Haa','h','From the deepest part of the throat. A light "h", like in hat.'],
+    ['ء','Hamzah','\'','From the deepest part of the throat. A tiny catch, like in "uh-oh".'],
+    ['ي','Yaa','y','Middle of the tongue, like "y" in yes.']
+  ];
+  const alpha = $('#alpha');
+  function spot(i){
+    const [l,n,r,t,h] = LETTERS[i];
+    const L=$('#spotL'); L.textContent=l; L.classList.remove('bump'); void L.offsetWidth; L.classList.add('bump');
+    $('#spotN').textContent=n; $('#spotS').textContent= r==="'" ? 'Sound: a throat sound' : 'Sound: "'+r+'"'; $('#spotT').textContent=t;
+    $('#spotH').innerHTML = h ? '<span class="pill heavy">Heavy letter</span>' : '<span class="pill light">Light letter</span>';
+    alpha.querySelectorAll('.tile').forEach((b,j)=>b.classList.toggle('on',j===i));
+  }
+  LETTERS.forEach((d,i)=>{
+    const b=document.createElement('button'); b.className='tile pop'+(d[4]?' heavy':''); b.style.setProperty('--i',Math.min(i,28)*0.35);
+    b.innerHTML='<span class="ar">'+d[0]+'</span><small>'+d[1]+'</small>';
+    b.setAttribute('aria-label',d[1]);
+    b.onclick=()=>spot(i); alpha.appendChild(b);
+  });
+  spot(1);
+
+  /* ---------- practice boards ---------- */
+  const HEAVY = new Set('خصضغطقظ');
+  const BASE = LETTERS.filter(d=>d[0]!=='ء').map(d=>[d[0],d[2]]); // 28 letters, Alif first
+  const MODES = {
+    fatha:{label:'Fatha',mark:'َ',v:'a'}, kasra:{label:'Kasra',mark:'ِ',v:'i'}, damma:{label:'Damma',mark:'ُ',v:'u'},
+    fathatan:{label:'Fathatan',mark:'ً',v:'an'}, kasratan:{label:'Kasratan',mark:'ٍ',v:'in'}, dammatan:{label:'Dammatan',mark:'ٌ',v:'un'},
+    sukoon:{label:'Jazm',mark:'ْ',v:''}
+  };
+  function cell(l,r,mode){
+    const m=MODES[mode];
+    if(l==='ا'){
+      if(mode==='kasra') return ['إِ','i'];
+      if(mode==='fatha') return ['أَ','a'];
+      if(mode==='damma') return ['أُ','u'];
+      return null;
+    }
+    if(mode==='sukoon') return ['اَ'+l+m.mark, 'a'+r];
+    if(mode==='fathatan') return [l+m.mark+'ا', r+'an'];
+    return [l+m.mark, r+m.v];
+  }
+  function renderBoard(id,mode){
+    const el=document.getElementById(id); el.innerHTML='';
+    let k=0;
+    BASE.forEach(([l,r])=>{
+      const c=cell(l,r,mode); if(!c) return;
+      const d=document.createElement('div'); d.className='btile'+(HEAVY.has(l)?' heavy':''); d.style.setProperty('--i',k++);
+      d.innerHTML='<div class="ar">'+c[0]+'</div><small>'+c[1]+'</small>'; el.appendChild(d);
+    });
+  }
+  document.querySelectorAll('.board-top').forEach(top=>{
+    const id=top.dataset.board, modes=top.dataset.modes.split(',');
+    modes.forEach((m,i)=>{
+      const b=document.createElement('button'); b.className='seg'; b.setAttribute('aria-pressed',i===0);
+      b.innerHTML=MODES[m].label+' <span class="ar-inline">ـ'+MODES[m].mark+'</span>';
+      b.onclick=()=>{top.querySelectorAll('.seg').forEach(x=>x.setAttribute('aria-pressed',x===b)); renderBoard(id,m);};
+      top.appendChild(b);
+    });
+    renderBoard(id,modes[0]);
+  });
+
+  /* ---------- joining ---------- */
+  const joiners=$('#joiners');
+  $('#joinBtn').onclick=()=>joiners.querySelectorAll('.joiner').forEach((j,i)=>setTimeout(()=>j.classList.add('joined'),i*180));
+  $('#splitBtn').onclick=()=>joiners.querySelectorAll('.joiner').forEach(j=>j.classList.remove('joined'));
+
+  /* ---------- reveal chips ---------- */
+  function reveal(id,items){
+    const el=document.getElementById(id);
+    items.forEach(([w,heavy,why],i)=>{
+      const b=document.createElement('button'); b.className='rv pop'; b.style.setProperty('--i',i+4);
+      b.innerHTML='<span class="ar">'+w+'</span><span class="ans">Tap to check</span>';
+      b.onclick=()=>{
+        b.classList.remove('shown'); void b.offsetWidth;
+        b.classList.add('shown', heavy?'is-heavy':'is-light');
+        b.querySelector('.ans').innerHTML=(heavy?'<span class="pill heavy">Heavy</span>':'<span class="pill light">Light</span>')+'<br>'+why;
+      };
+      el.appendChild(b);
+    });
+  }
+  reveal('raaReveal',[
+    ['رَبِّ',1,'Raa has Fatha'],
+    ['رُسُلٌ',1,'Raa has Damma'],
+    ['قُرْاٰنٌ',1,'Jazm after Damma'],
+    ['رِجَالٌ',0,'Raa has Kasra'],
+    ['فِرْعَوْنَ',0,'Jazm after Kasra'],
+    ['قِرْطَاسٍ',1,'Exception: a heavy letter (ط) comes next']
+  ]);
+  reveal('allahReveal',[
+    ['اَللّٰهُ الصَّمَدُ',1,'Starting with it'],
+    ['نَصْرُ اللّٰهِ',1,'After Damma'],
+    ['قَالَ اللّٰهُ',1,'After Fatha'],
+    ['بِسْمِ اللّٰهِ',0,'After Kasra'],
+    ['اَلْحَمْدُ لِلّٰهِ',0,'After Kasra']
+  ]);
+
+  /* ---------- quiz ---------- */
+  const QUIZ=[
+    {w:'مِنۢ بَعْدِ',iq:1,q:'What happens to the Noon?',o:['Izhar','Idgham','Iqlab','Ikhfa'],a:2,why:'Noon sakin before ب changes to Meem.'},
+    {w:'اَنْعَمْتَ',q:'What happens to the Noon?',o:['Izhar','Idgham','Iqlab','Ikhfa'],a:0,why:'ع is a throat letter, so say the Noon clearly.'},
+    {w:'مِنْ شَرِّ',q:'What happens to the Noon?',o:['Izhar','Idgham','Iqlab','Ikhfa'],a:3,why:'ش is one of the 15 Ikhfa letters.'},
+    {w:'مِنْ رَّبِّهِمْ',q:'Which kind of Idgham?',o:['With hum','Without hum'],a:1,why:'ل and ر merge without a hum.'},
+    {w:'اَلشَّمْسُ',q:'Do we read the Laam?',o:['Yes, it is a Moon letter','No, it is a Sun letter'],a:1,why:'ش is a Sun letter, so the Laam is silent.'},
+    {w:'رِجَالٌ',q:'Is the Raa heavy or light?',o:['Heavy','Light'],a:1,why:'Raa with Kasra is light.'},
+    {w:'بِسْمِ اللّٰهِ',q:'The Laam of Allah is…',o:['Heavy','Light'],a:1,why:'It comes after a Kasra.'},
+    {w:'بٌ',q:'How do we read this?',o:['ba','bi','bun','bin'],a:2,why:'Dammatan says "un".'},
+    {w:'لَمْ يَلِدْ',q:'Which letter bounces (Qalqalah)?',o:['ل','د','ي','م'],a:1,why:'د with Jazm is a bouncy letter.'},
+    {w:'بٰ',q:'How do we read the standing Zabar?',o:['ba','baa','bi','bu'],a:1,why:'Khari Zabar is long: stretch it for 2 beats.'},
+    {w:'قِيْلَ',q:'Which letter stretches the sound?',o:['Yaa','Qaaf','Laam'],a:0,why:'Yaa sakin after Kasra is a Madda letter: 2 beats.'},
+    {w:'خَوْفٍ',q:'The Waaw here is a…',o:['Madda letter','Leen letter'],a:1,why:'Waaw sakin after Fatha is a soft Leen letter.'},
+    {w:'رَبِّ',q:'How do we read it?',o:['ra-bi','rab-bi','raa-bi'],a:1,why:'Shaddah doubles the letter: first with Jazm, then with Kasra.'},
+    {w:'قُرْاٰنٌ',q:'Is the Raa heavy or light?',o:['Heavy','Light'],a:0,why:'Raa with Jazm after a Damma is heavy.'},
+    {w:'مَنْ يَّقُوْلُ',q:'What happens to the Noon?',o:['Izhar','Idgham with hum','Idgham without hum','Ikhfa'],a:1,why:'Noon sakin before ي merges with a hum for 2 beats.'},
+    {w:'جَآءَ',q:'Which Madd is this?',o:['Natural Madd','Joined Madd (Muttasil)','Separated Madd (Munfasil)','Necessary Madd (Lazim)'],a:1,why:'Hamza comes after the stretchy letter in the same word: 4 or 5 beats.'},
+    {w:'اِنَّآ اَنْزَلْنٰهُ',q:'Which Madd is this?',o:['Joined Madd (Muttasil)','Separated Madd (Munfasil)','Necessary Madd (Lazim)'],a:1,why:'The word ends with the stretchy letter and the next word starts with Hamza.'},
+    {w:'الضَّآلِّيْنَ',q:'How many beats do we stretch?',o:['2 beats','4 beats','6 beats'],a:2,why:'A Shaddah comes after the stretchy letter: Madd Lazim, 6 beats.'},
+    {w:'الٓمّٓ',q:'How do we read it?',o:['Alam','Alif Laaam Meeem','Alma'],a:1,why:'Huroof-e-Muqatta\'at are read one by one, by their names.'},
+    {w:'رَبِّ الْعٰلَمِيْنَ',q:'The Alif at the start of الْعٰلَمِيْنَ is…',o:['Read','Skipped when joining'],a:1,why:'It is Hamzat-ul-Wasl: rab-bil-\'aalameen.'},
+    {w:'لُّمَزَةٍ الَّذِيْ',q:'What do we add between the words?',o:['A small Noon with Kasra','A small Meem','Nothing'],a:0,why:'This is Noon Qutni: lumazatinil-ladhee.'},
+    {w:'قَدْ تَّبَيَّنَ',q:'Which kind of Idgham?',o:['Taam (complete)','Naqis (incomplete)'],a:0,why:'The د disappears completely into the ت.'},
+    {w:'اَحَطْتُّ',q:'Which kind of Idgham?',o:['Taam (complete)','Naqis (incomplete)'],a:1,why:'The heaviness of ط stays, so it is incomplete.'},
+    {w:'يَبْصُطُ',q:'Which letter do we read?',o:['ص','س'],a:1,why:'It is written with ص but read with س.'},
+    {w:'مَجْرٖىهَا',q:'Which special rule is here?',o:['Imala','Ishmam','Sakta','Tasheel'],a:0,why:'Imala: maj-rē-haa, the only place in Hafs.'},
+    {w:'تَاْمَنَّا',q:'Which special rule is here?',o:['Imala','Ishmam','Sakta','Tasheel'],a:1,why:'Ishmam: round the lips silently on the Noon.'},
+    {w:'بَلْ رَانَ',q:'Which special rule is here?',o:['Imala','Ishmam','Sakta','Ibdal'],a:2,why:'Sakta: a tiny pause without a breath after بَلْ.'},
+    {w:'قَالُوْا',q:'Do we read the last Alif?',o:['Yes','No'],a:1,why:'The Alif after the Waaw of "they" is silent.'},
+    {w:'الْحُطَمَةُ',q:'How do we stop on this word?',o:['الْحُطَمَتْ','الْحُطَمَهْ','الْحُطَمَةُ'],a:1,why:'Round Taa becomes Haa with Jazm when we stop.'},
+    {w:'م',q:'This stop sign above a word means…',o:['Must stop','Do not stop','Pause without a breath'],a:0,why:'م is Waqf Lazim: you must stop.'}
+  ];
+  let qi=0, score=0, answered=false;
+  const quiz=$('#quiz');
+  function drawQ(){
+    answered=false;
+    if(qi>=QUIZ.length){
+      const stars='★'.repeat(Math.round(score/QUIZ.length*5)).padEnd(5,'☆');
+      quiz.innerHTML='<p class="q-text">You got '+score+' out of '+QUIZ.length+'!</p><div class="stars" style="font-size:44px">'+stars+'</div><p class="muted">'+(score===QUIZ.length?'Perfect! MashaAllah!':'Great try! Go back to the steps you missed and try again.')+'</p><button class="btn lime" id="again" style="margin-top:10px">Play again</button>';
+      $('#again').onclick=()=>{qi=0;score=0;drawQ();};
+      return;
+    }
+    const Q=QUIZ[qi];
+    quiz.innerHTML='<div class="q-meta"><span>Question '+(qi+1)+' of '+QUIZ.length+'</span><span class="stars">Score: '+score+'</span></div>'+
+      '<div class="q-ar ar'+(Q.iq?' iq':'')+'">'+Q.w+'</div><p class="q-text">'+Q.q+'</p><div class="opts">'+
+      Q.o.map((o,i)=>'<button class="opt" data-i="'+i+'">'+(/^[؀-ۿ\s]+$/.test(o)?'<span class="ar-inline" style="font-size:30px;line-height:1.8">'+o+'</span>':o)+'</button>').join('')+
+      '</div><div class="q-feedback" id="fb"></div>';
+    quiz.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+      if(answered) return; answered=true;
+      const i=+b.dataset.i, ok=i===Q.a;
+      if(ok) score++;
+      b.classList.add(ok?'right':'wrong');
+      quiz.querySelectorAll('.opt')[Q.a].classList.add('right');
+      $('#fb').innerHTML=(ok?'<span style="color:var(--lime-ink)">Correct! </span>':'<span style="color:#c0392b">Not quite. </span>')+Q.why;
+      setTimeout(()=>{qi++;drawQ();},2200);
+    });
+  }
+  drawQ();
+
+  /* ---------- confetti ---------- */
+  const conf=$('#confetti'); const cols=['#a8e63a','#ffd43b','#3b82ff','#ffffff','#ff7a6b'];
+  for(let i=0;i<40;i++){const c=document.createElement('i');c.style.left=Math.random()*100+'%';c.style.background=cols[i%cols.length];c.style.animationDuration=(4+Math.random()*5)+'s';c.style.animationDelay=(-Math.random()*8)+'s';conf.appendChild(c);}
+
+  /* ---------- roadmap + menu ---------- */
+  const STEPS=[
+    ['Letters','Huroof','ا ب ت','letters'],['Joined letters','Murakkabat','بـ ـبـ ـب','shapes'],['Harakat','Zabar · Zer · Pesh','بَ بِ بُ','harakat'],
+    ['Tanween','Do zabar · do zer · do pesh','بًا بٍ بٌ','tanween'],['Jazm','Stop + Qalqalah','اَبْ','jazm'],['Khari Harakat','Standing marks','بٰ بٖ بٗ','khari'],
+    ['Huroof-e-Madda','Stretchy letters','بَا بُوْ بِيْ','madda-letters'],['Huroof-e-Leen','Soft letters','بَوْ بَيْ','leen'],['Tashdeed','Shaddah + Ghunnah','بّ','tashdeed'],
+    ['Rules of Raa','Heavy or light','رَ رِ','raa'],['Rules of Laam','Allah · Sun · Moon','اَلْ','allah'],['Noon sakin & Tanween','4 rules','نْ','noon'],
+    ['Maddat','2, 4, 5 or 6 beats','جَآءَ','maddat'],["Huroof-e-Muqatta'at",'Letters read by name','الٓمّٓ','muqattaat'],['Hamzat-ul-Wasl','The hiding Alif','اِهْدِنَا','wasl'],
+    ['Noon Qutni','The bridge Noon','نِ','qutni'],['Idgham Taam & Naqis','Full or half merge','قَدْ تَّبَيَّنَ','idgham-taam'],['Seen & Saad words','ص or س','يَبْصُطُ','seen-saad'],
+    ['Imala','One special word','مَجْرٖىهَا','imala'],['Ishmam','Silent round lips','تَاْمَنَّا','ishmam'],['Sakta','Tiny pause','بَلْ رَانَ','sakta'],
+    ['Tasheel','Soft Hamza','ءَاَعْجَمِيٌّ','tasheel'],['Ibdal','Hamza to long Alif','آللّٰهُ','ibdal'],['Silent Alif','Written, not read','قَالُوْا','silent-alif'],
+    ['Waqf','How to stop','اَحَدْ','waqf'],['Waqf signs','Stop signs','م ط ج','waqf-signs']
+  ];
+  const idx = id => slides.findIndex(s=>s.dataset.id===id);
+  const road=$('#road');
+  STEPS.forEach((s,i)=>{
+    const b=document.createElement('button'); b.className='step pop'; b.style.setProperty('--i',3+i*0.3);
+    b.innerHTML='<span class="num">'+(i+1)+'</span><span><b>'+s[0]+'</b><small>'+s[1]+'</small><br><span class="ar-inline">'+s[2]+'</span></span>';
+    b.onclick=()=>go(idx(s[3])); road.appendChild(b);
+  });
+  const menuList=$('#menuList');
+  [['Welcome','start'],['Your journey','map']].concat(STEPS.map((s,i)=>['Step '+(i+1)+' · '+s[0],s[3]])).concat([['Quiz time','quiz'],['Well done!','done']]).forEach(([t,id])=>{
+    const li=document.createElement('li'); const b=document.createElement('button'); b.className='jump'; b.textContent=t;
+    b.onclick=()=>{closeMenu();go(idx(id));}; li.appendChild(b); menuList.appendChild(li);
+  });
+  const menu=$('#menu');
+  function closeMenu(){menu.hidden=true;$('#menuBtn').focus();}
+  $('#menuBtn').onclick=()=>{menu.hidden=false;menu.querySelector('.jump').focus();};
+  $('#menuClose').onclick=closeMenu;
+  menu.addEventListener('click',e=>{if(e.target===menu)closeMenu();});
+
+  /* ---------- navigation ---------- */
+  function go(n, fromHash){
+    if(n<0||n>=slides.length) return;
+    deck.classList.toggle('back', n<cur);
+    slides[cur].classList.remove('active');
+    cur=n; const s=slides[cur];
+    s.classList.add('active'); s.scrollTop=0;
+    $('#bar').style.width=((cur+1)/slides.length*100)+'%';
+    $('#counter').textContent=(cur+1)+' / '+slides.length;
+    $('#lessonTag').textContent=s.dataset.lesson;
+    $('#prev').disabled=cur===0; $('#next').disabled=cur===slides.length-1;
+    if(s.dataset.id==='joining'){ joiners.querySelectorAll('.joiner').forEach(j=>j.classList.remove('joined')); setTimeout(()=>$('#joinBtn').click(),1400); }
+    if(!fromHash){ try{ history.replaceState(null,'','#'+s.dataset.id);}catch(e){ location.hash=s.dataset.id; } }
+  }
+  document.querySelectorAll('[data-go]').forEach(b=>b.onclick=()=>go(+b.dataset.go));
+  $('#prev').onclick=()=>go(cur-1); $('#next').onclick=()=>go(cur+1);
+  document.addEventListener('keydown',e=>{
+    if(!menu.hidden){ if(e.key==='Escape') closeMenu(); return; }
+    if(e.key==='ArrowRight'||e.key==='PageDown'){go(cur+1);}
+    if(e.key==='ArrowLeft'||e.key==='PageUp'){go(cur-1);}
+  });
+  let tx=null,ty=null;
+  deck.addEventListener('touchstart',e=>{tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+  deck.addEventListener('touchend',e=>{
+    if(tx===null) return; const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+    if(Math.abs(dx)>70&&Math.abs(dx)>Math.abs(dy)*1.5){ go(cur+(dx<0?1:-1)); } tx=null;
+  },{passive:true});
+  function fromHash(){ const h=(location.hash||'').slice(1); const i=idx(h); return i>=0?i:0; }
+  window.addEventListener('hashchange',()=>{const i=fromHash(); if(i!==cur) go(i,true);});
+  slides[0].classList.add('active');
+  const start=fromHash(); cur=0; go(start,true);
+})();
+</script>
+
+</body>
+</html>
